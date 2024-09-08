@@ -2,6 +2,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import LandingPage from "./pagesAdmin/LandingPage";
 import Login from "./pagesAdmin/Login";
 import SignUp from "./pagesAdmin/SignUp";
+import 'react-toastify/ReactToastify.css';
 
 function App() {
   return (

@@ -12,9 +12,9 @@ const LandingPage = () => {
       <div className="mt-0 m-4">
         {/* top part */}
         <div className="flex">
-          {/* <div>
-            <img src={logo} alt="logo" className="h-[15vh]" />
-          </div> */}
+          <div>
+            <img src={logo} alt="logo" className="h-[45vh]" />
+          </div>
           <div className="flex gap-6 mt-8 ml-auto mr-3">
             <Button value={"Login"} />
             <Button value={"Sign up"} />
