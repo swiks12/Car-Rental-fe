@@ -3,6 +3,7 @@ import loginCar from "../assets/loginCar.avif";
 import { Link, useNavigate } from "react-router-dom";
 import Button from "../components/Button";
 import SignUp from "./SignUp";
+import { ToastContainer } from "react-toastify";
 const Login = () => {
   return (
     <div className="m-5 rounded-3xl border-black border-2 shadow-xl ">
@@ -35,6 +36,7 @@ const Login = () => {
             </Link>
           </p>
         </form>
+        <ToastContainer/>
         
         
       </div>
