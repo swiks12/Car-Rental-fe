@@ -45,7 +45,7 @@ const SignUp = () => {
 }
   return (
     <div className="m-5 rounded-3xl border-black border-2 shadow-xl ">
-      <div className="flex gap-[95px] place-content-center ml-[150px]">
+      <div className="flex gap-[190px] place-content-center ml-[150px]">
         <form className="flex flex-col gap-7 mt-[155px] " onSubmit={handleSubmit}>
           <p className="text-4xl font-extrabold text-center mb-5">
             Create an Account

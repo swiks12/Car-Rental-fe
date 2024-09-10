@@ -8,12 +8,12 @@ const Login = () => {
   return (
     <div className="m-5 rounded-3xl border-black border-2 shadow-xl ">
       
-      <div className="flex gap-[95px] place-content-center mr-[75px]">
-      <img src={loginCar} alt="login car" className="h-[95vh] w-[60vw] rounded-l-3xl" />
+      <div className="flex gap-[120px] place-content-center ">
+      <img src={loginCar} alt="login car" className="h-[95vh] w-[55.5vw] rounded-l-3xl" />
         <form className="flex flex-col gap-7 mt-[200px]  ">
-        <p className="text-4xl font-extrabold text-center mb-5">
-        Login
-      </p>
+            <p className="text-4xl font-extrabold text-center mb-5">
+            Login
+          </p>
           <input
             type="text"
             placeholder="Email"
