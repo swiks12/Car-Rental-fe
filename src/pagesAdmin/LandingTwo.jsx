@@ -4,7 +4,7 @@ import selfDrive from "../assets/selfDrive.png";
 const LandingTwo = () => {
   return (
     <>
-      <div className="m-[52px] ">
+      <div className="m-[52px] h-[100vh]">
         <p className="font-bold text-2xl">
           Easy rentals with self drive and driver options!
         </p>
@@ -27,7 +27,9 @@ const LandingTwo = () => {
           </div>
         </div>
 
-        <p className="font-bold text-xl mt-[100px]">Simple and Straight-forward Procedures</p>
+        <p className="font-bold text-xl mt-[100px]">
+          Simple and Straight-forward Procedures
+        </p>
         {/* procedure content */}
         <div className="flex  mt-[100px] gap-5 justify-center">
           {/* 1 */}
