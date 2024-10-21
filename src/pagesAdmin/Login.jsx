@@ -34,7 +34,7 @@ const handleLogin=async(e)=>{
       navigate("/userDashboard");
     }
     else{
-      navigate("/adminDashboard");
+      navigate("/admin/dashboard");
     }
 
 

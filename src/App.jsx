@@ -6,6 +6,8 @@ import "react-toastify/ReactToastify.css";
 import UserDashboard from "./pagesUser/UserDashboard";
 import AdminDashboard from "./pagesAdmin/AdminDashboard";
 import AdminSidebar from "./components/AdminSidebar";
+import DriverMangement from "./pagesAdmin/DriverMangement";
+import CreateDriverListings from "./pagesAdmin/CreateDriverListings";
 
 function App() {
   return (
@@ -21,6 +23,11 @@ function App() {
         <Route path="/admin" element={<AdminSidebar />}>
           {/* Nested admin dashboard route */}
           <Route path="dashboard" element={<AdminDashboard />} />
+          <Route path="drivermgmt" element={<DriverMangement />} />
+          <Route path="drivermgmt/create" element={<CreateDriverListings />} />
+            
+
+
         </Route>
       </Routes>
     </BrowserRouter>

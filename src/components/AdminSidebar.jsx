@@ -1,10 +1,12 @@
 import React from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 
 const AdminSidebar = () => {
+    const navigate=useNavigate()
+
   return (
     <>
-      <div className="flex h-[100vh] bg-yellow-400">
+      <div className="flex h-[100vh]">
         <div className=" bg-black w-[15vw] rounded-r-[10px] opacity-80 ">
           <div className="h-[100vh] flex flex-col text-white ml-3">
             <div className="flex items-center gap-6 ">
@@ -36,7 +38,7 @@ const AdminSidebar = () => {
                 <p>Car</p>
               </divflex>
 
-              <div className="flex items-center gap-6  text-white ">
+              <div className="flex items-center gap-6  text-white " onClick={()=>{navigate("/admin/drivermgmt")}}>
                 <span class="material-symbols-outlined">search_hands_free</span>
                 <p>Driver</p>
               </div>
