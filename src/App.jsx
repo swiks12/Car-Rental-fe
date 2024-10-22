@@ -8,6 +8,8 @@ import AdminDashboard from "./pagesAdmin/AdminDashboard";
 import AdminSidebar from "./components/AdminSidebar";
 import DriverMangement from "./pagesAdmin/DriverMangement";
 import CreateDriverListings from "./pagesAdmin/CreateDriverListings";
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer} from "react-toastify";
 
 function App() {
   return (
@@ -30,6 +32,7 @@ function App() {
 
         </Route>
       </Routes>
+      <ToastContainer />
     </BrowserRouter>
   );
 }

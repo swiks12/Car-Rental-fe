@@ -40,16 +40,19 @@ const CreateDriverListings = () => {
     };
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const url = "http://localhost:4000/driver/create";
-      const { data: res } = axios.post(url, data);
-      toast.success("Driver Details Added!");
+      const { data: res } = await axios.post(url, data); // await the post request
+      console.log(res);
+      toast.success("Driver Details Added!"); // toast will now work properly
     } catch (error) {
       console.log(error);
+      toast.error("Failed to add driver details"); // optional: show error toast
     }
   };
+  
 
   return (
     <>
@@ -60,7 +63,7 @@ const CreateDriverListings = () => {
           className="w-[40vw] h-[100vh] object-cover"
         />
 
-        <div className="flex items-center  ">
+        <div className="flex items-center ">
           <div className="ml-[170px]">
             <p className="text-4xl font-extrabold mb-12">
               Create Driver Listings!
@@ -73,6 +76,7 @@ const CreateDriverListings = () => {
                 name="name"
                 onChange={handleChange}
                 value={data.name}
+                required
               />
               <div className="flex gap-8">
                 <input
@@ -82,6 +86,7 @@ const CreateDriverListings = () => {
                   name="age"
                   onChange={handleChange}
                   value={data.age}
+                  required
                 />
                 <input
                   type="number"
@@ -90,6 +95,7 @@ const CreateDriverListings = () => {
                   name="contact"
                   onChange={handleChange}
                   value={data.contact}
+                  required
                 />
               </div>
               <p className="font-semibold">Click to add Driver photo</p>
