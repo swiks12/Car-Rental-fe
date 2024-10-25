@@ -17,9 +17,9 @@ const LandingOne = () => {
       <div className="m-[88px]">
         <div className="absolute top-14 left-[150px] ">
           <img src={logo} alt="logo" className="h-[40vh] ml-[60px]" />
-          <div className=" absolute top-[200px] w-[100vw]">
-            <p className="font-extrabold text-5xl">Wheels on Demand</p>
-            <p className="font-semibold text-2xl ">
+          <div className=" absolute top-[200px] ">
+            <p className="font-extrabold text-5xl text-nowrap">Wheels on Demand</p>
+            <p className="font-semibold text-2xl text-nowrap ">
               Effortless Rentals,Unforgettable Experiences
             </p>
           </div>

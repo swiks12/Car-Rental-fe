@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const DriverMangement = () => {
   const navigate = useNavigate();
@@ -9,16 +10,32 @@ const DriverMangement = () => {
 
   useEffect(() => {
     const fetchDrivers = async () => {
-      const url = "http://localhost:4000/driver/getDrivers";
+      const url = "http://localhost:4000/driver/get";
       const { data: res } = await axios.get(url, data);
       setData(res);
     };
     fetchDrivers();
   }, []);
+
+  // handle Delete
+  const handleDelete = async (id) => {
+    try {
+      console.log(id);
+      const url = `http://localhost:4000/driver/delete/${id}`;
+      const { data: res } = await axios.delete(url);
+      setData(data.filter((item) => item._id !== id));
+      toast.success("Driver Information Deleted successfully!");
+    } catch (error) {
+      toast.error("error deleting driver infromation");
+    }
+  };
+
   return (
     <>
       <div className="bg-yellow-gray w-[100vw]">
-        <p className="text-4xl font-extrabold text-center w-[80vw] mt-9">Driver Management</p>
+        <p className="text-4xl font-extrabold text-center w-[80vw] mt-9">
+          Driver Management
+        </p>
         <div className="mt-[58px] flex gap-12 m-[100px] ">
           {data.map((item, key) => (
             <div
@@ -28,12 +45,28 @@ const DriverMangement = () => {
               <img
                 src={item.image.url}
                 alt="driverPhoto"
-                className="h-[110px] w-[110px] rounded-full"
+                className="h-[100px] w-[100px] rounded-full object-cover"
               />
               <p className=" font-semibold mt-2">{item.name}</p>
               <div className="flex gap-5 mt-2">
-                <span class="material-symbols-outlined text-blue-600">edit</span>
-                <span class="material-symbols-outlined text-red-500">delete</span>
+                <div
+                  onClick={() => {
+                    navigate(`/admin/drivermgmt/update/${item._id}`);
+                  }}
+                >
+                  <span class="material-symbols-outlined text-blue-600 ">
+                    edit
+                  </span>
+                </div>
+                <div
+                  onClick={() => {
+                    handleDelete(item._id);
+                  }}
+                >
+                  <span class="material-symbols-outlined text-red-500">
+                    delete
+                  </span>
+                </div>
               </div>
             </div>
           ))}

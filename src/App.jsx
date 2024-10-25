@@ -10,6 +10,7 @@ import DriverMangement from "./pagesAdmin/DriverMangement";
 import CreateDriverListings from "./pagesAdmin/CreateDriverListings";
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer} from "react-toastify";
+import UpdateDriver from "./pagesAdmin/UpdateDriver";
 
 function App() {
   return (
@@ -25,10 +26,12 @@ function App() {
         <Route path="/admin" element={<AdminSidebar />}>
           {/* Nested admin dashboard route */}
           <Route path="dashboard" element={<AdminDashboard />} />
+          {/* driver management ma view ko pani kaam huncha */}
           <Route path="drivermgmt" element={<DriverMangement />} />
           <Route path="drivermgmt/create" element={<CreateDriverListings />} />
-            
+          <Route path="drivermgmt/update/:id" element={<UpdateDriver />} />
 
+  
 
         </Route>
       </Routes>
