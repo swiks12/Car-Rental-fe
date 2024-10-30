@@ -68,7 +68,7 @@ const AdminSidebar = () => {
                 </div>
               )}
 
-              <div className="flex items-center gap-6 text-white">
+              <div className="flex items-center gap-6 text-white " onClick={()=>{navigate("/admin/package")}}>
                 <span className="material-symbols-outlined">
                   swap_driving_apps_wheel
                 </span>

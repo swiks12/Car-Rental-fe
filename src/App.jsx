@@ -11,6 +11,9 @@ import CreateDriverListings from "./pagesAdmin/CreateDriverListings";
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer} from "react-toastify";
 import UpdateDriver from "./pagesAdmin/UpdateDriver";
+import CarManagement from "./pagesAdmin/CarManagement";
+import CreateCarListings from "./pagesAdmin/CreateCarListings";
+import Package from "./pagesAdmin/Package";
 
 function App() {
   return (
@@ -30,6 +33,11 @@ function App() {
           <Route path="drivermgmt" element={<DriverMangement />} />
           <Route path="drivermgmt/create" element={<CreateDriverListings />} />
           <Route path="drivermgmt/update/:id" element={<UpdateDriver />} />
+
+          <Route path="carmgmt" element={<CarManagement />} />
+          <Route path="carmgmt/create" element={<CreateCarListings />} />
+
+          <Route path="package" element={<Package />} />
 
   
 
