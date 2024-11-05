@@ -14,6 +14,7 @@ import UpdateDriver from "./pagesAdmin/UpdateDriver";
 import CarManagement from "./pagesAdmin/CarManagement";
 import CreateCarListings from "./pagesAdmin/CreateCarListings";
 import Package from "./pagesAdmin/Package";
+import UpdateCars from "./pagesAdmin/UpdateCars";
 
 function App() {
   return (
@@ -36,6 +37,8 @@ function App() {
 
           <Route path="carmgmt" element={<CarManagement />} />
           <Route path="carmgmt/create" element={<CreateCarListings />} />
+          <Route path="carmgmt/update/:id" element={<UpdateCars/>} />
+
 
           <Route path="package" element={<Package />} />
 

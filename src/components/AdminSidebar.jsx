@@ -76,7 +76,7 @@ const AdminSidebar = () => {
                 {/* Show text only when expanded */}
               </div>
 
-              <div className="flex items-center gap-6 text-white">
+              <div className="flex items-center gap-6 text-white " onClick={()=>{navigate("/admin/carmgmt")}}>
                 <span className="material-symbols-outlined">
                   directions_car
                 </span>
