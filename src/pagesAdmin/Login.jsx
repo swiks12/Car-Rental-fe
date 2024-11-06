@@ -31,7 +31,7 @@ const handleLogin=async(e)=>{
     localStorage.setItem("token",res.token);
     localStorage.setItem("role",res.role);
     if(res.role=="user"){
-      navigate("/userDashboard");
+      navigate("/user/home");
     }
     else{
       navigate("/admin/dashboard");

@@ -3,18 +3,21 @@ import LandingPage from "./pagesAdmin/LandingPage";
 import Login from "./pagesAdmin/Login";
 import SignUp from "./pagesAdmin/SignUp";
 import "react-toastify/ReactToastify.css";
-import UserDashboard from "./pagesUser/UserDashboard";
+import UserDashboard from "./pagesUser/UserHome";
 import AdminDashboard from "./pagesAdmin/AdminDashboard";
 import AdminSidebar from "./components/AdminSidebar";
 import DriverMangement from "./pagesAdmin/DriverMangement";
 import CreateDriverListings from "./pagesAdmin/CreateDriverListings";
-import 'react-toastify/dist/ReactToastify.css';
-import { ToastContainer} from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
 import UpdateDriver from "./pagesAdmin/UpdateDriver";
 import CarManagement from "./pagesAdmin/CarManagement";
 import CreateCarListings from "./pagesAdmin/CreateCarListings";
 import Package from "./pagesAdmin/Package";
 import UpdateCars from "./pagesAdmin/UpdateCars";
+import UserNavBar from "./components/UserNavBar";
+import UserHome from "./pagesUser/UserHome";
+import SelfDrivePage from "./pagesUser/SelfDrivePage";
 
 function App() {
   return (
@@ -25,7 +28,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/userDashboard" element={<UserDashboard />} />
-        
+
         {/* Admin routes */}
         <Route path="/admin" element={<AdminSidebar />}>
           {/* Nested admin dashboard route */}
@@ -37,12 +40,16 @@ function App() {
 
           <Route path="carmgmt" element={<CarManagement />} />
           <Route path="carmgmt/create" element={<CreateCarListings />} />
-          <Route path="carmgmt/update/:id" element={<UpdateCars/>} />
-
+          <Route path="carmgmt/update/:id" element={<UpdateCars />} />
 
           <Route path="package" element={<Package />} />
+        </Route>
 
-  
+        {/* user routes */}
+        <Route path="/user" element={<UserNavBar/>}>
+          <Route path="home" element={<UserHome/>}/>
+          <Route path="selfDrive" element={<SelfDrivePage/>}/>
+
 
         </Route>
       </Routes>
