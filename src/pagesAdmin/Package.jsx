@@ -112,7 +112,7 @@ const Package = () => {
 
         <button
           type="submit"
-          className="pl-4 pr-4 pt-2 pb-2 rounded-[10px] bg-black text-white w-[10vw]"
+          c
           onClick={handleSubmit}
         >
           Submit

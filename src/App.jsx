@@ -18,6 +18,7 @@ import UpdateCars from "./pagesAdmin/UpdateCars";
 import UserNavBar from "./components/UserNavBar";
 import UserHome from "./pagesUser/UserHome";
 import SelfDrivePage from "./pagesUser/SelfDrivePage";
+import GetCars from "./pagesUser/GetCars";
 
 function App() {
   return (
@@ -49,6 +50,8 @@ function App() {
         <Route path="/user" element={<UserNavBar/>}>
           <Route path="home" element={<UserHome/>}/>
           <Route path="selfDrive" element={<SelfDrivePage/>}/>
+          <Route path="getCars/:id" element={<GetCars/>}/>
+
 
 
         </Route>

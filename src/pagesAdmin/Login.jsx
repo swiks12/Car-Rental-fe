@@ -30,6 +30,8 @@ const handleLogin=async(e)=>{
     console.log(res);
     localStorage.setItem("token",res.token);
     localStorage.setItem("role",res.role);
+    localStorage.setItem("id",res.userId);
+
     if(res.role=="user"){
       navigate("/user/home");
     }
