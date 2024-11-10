@@ -19,6 +19,7 @@ import UserNavBar from "./components/UserNavBar";
 import UserHome from "./pagesUser/UserHome";
 import SelfDrivePage from "./pagesUser/SelfDrivePage";
 import GetCars from "./pagesUser/GetCars";
+import CarDetails from "./pagesUser/CarDetails";
 
 function App() {
   return (
@@ -50,7 +51,9 @@ function App() {
         <Route path="/user" element={<UserNavBar/>}>
           <Route path="home" element={<UserHome/>}/>
           <Route path="selfDrive" element={<SelfDrivePage/>}/>
-          <Route path="getCars/:id" element={<GetCars/>}/>
+          <Route path="getCars/:id/:bookingStartDate/:bookingEndDate" element={<GetCars/>}/>
+          <Route path="carDetails/:bookingId/:carId" element={<CarDetails/>}/>
+
 
 
 

@@ -7,7 +7,7 @@ const UserNavBar = () => {
     const navigate=useNavigate();
   return (
     <>
-      <div className="flex items-center ml-2 mr-5  fixed w-[100vw] bg-white  bg-opacity-20">
+      <div className="flex items-center ml-2 mr-5  fixed w-[100vw] bg-white  bg-opacity-20 ">
         <img src={logo} alt="logo" className="h-[12vh]" />
         <div className="flex justify-end w-full gap-12 mr-12 text-black">
           <p className="font-bold" onClick={()=>{navigate("/user/home")}}>Home</p>

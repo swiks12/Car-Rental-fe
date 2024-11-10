@@ -16,7 +16,7 @@ const libraries = ["places", "directions"];
 const googleKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 
 const SelfDrivePage = () => {
-  const navigate=useNavigate();
+  const navigate = useNavigate();
   const [destination, setDestination] = useState("");
   const [data, setData] = useState({
     bookingStartDate: null,
@@ -24,7 +24,8 @@ const SelfDrivePage = () => {
     pickUp: "Thapathali, Kathmandu",
     pickUpTime: null,
     dropOffTime: null,
-    userId:localStorage.getItem("id")
+    userId: localStorage.getItem("id"),
+    bookingPeriod: null,
   });
   // console.log(data.id)
   const [isLoaded, setIsLoaded] = useState(false);
@@ -36,28 +37,47 @@ const SelfDrivePage = () => {
   const searchBoxRef = useRef(null);
   const mapRef = useRef(null);
 
-  // const handleChange = ({ currentTarget: input }) => {
-  //   setData({ ...data, [input.name]: input.value });
-  // };
+  const startDate = new Date(data.bookingStartDate);
+  const endDate = new Date(data.bookingEndDate);
 
-  const handleSubmit = async(e) => {
+  // Normalize the dates (set time to 00:00:00 for both start and end dates)
+  startDate.setHours(0, 0, 0, 0);
+  endDate.setHours(0, 0, 0, 0);
+
+  // Calculate the difference in days
+  const bookingPeriod =
+    Math.floor((endDate - startDate) / (1000 * 60 * 60 * 24)) + 1;
+
+  console.log(bookingPeriod);
+
+  // normalize date
+  const normalizeDate = (date) => {
+    // Ensure the date is in YYYY-MM-DD format (ISO format without the time)
+    const normalizedDate = new Date(date);
+    return normalizedDate.toISOString().split("T")[0]; // Extracts only the date (YYYY-MM-DD)
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const url="http://localhost:4000/booking/create";
-    const {data:res}=await axios.post(url,{
+    const url = "http://localhost:4000/booking/create";
+    const { data: res } = await axios.post(url, {
       bookingStartDate: data.bookingStartDate,
       bookingEndDate: data.bookingEndDate,
       pickUp: data.pickUp,
-      destination:destination,
-      distance:distance,
+      destination: destination,
+      distance: distance,
       pickUpTime: data.pickUpTime,
       dropOffTime: data.dropOffTime,
       userId: data.userId,
+      bookingPeriod: bookingPeriod,
     });
-    const id=res.id;
+    const id = res.id;
     console.log(id);
-    localStorage.setItem("bookingStartDate",bookingStartDate);
-    localStorage.setItem("bookingEndDate",bookingEndDate);
-    navigate(`/user/getCars/${id}`);
+    // localStorage.setItem("bookingStartDate",bookingStartDate);
+    // localStorage.setItem("bookingEndDate",bookingEndDate);
+    navigate(
+      `/user/getCars/${id}/${data.bookingStartDate}/${data.bookingEndDate}`
+    );
   };
 
   useEffect(() => {
@@ -205,7 +225,6 @@ const SelfDrivePage = () => {
                   }
                   dateFormat="dd/MM/yyyy"
                   minDate={new Date()}
-                  isClearable
                   placeholderText="Select booking start date"
                   className="w-[250px]"
                 />
@@ -219,7 +238,6 @@ const SelfDrivePage = () => {
                   }
                   dateFormat="dd/MM/yyyy"
                   minDate={new Date()}
-                  isClearable
                   placeholderText="Select booking end date"
                   className="w-[250px]"
                 />
