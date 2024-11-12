@@ -5,6 +5,13 @@ const AdminSidebar = () => {
   const navigate = useNavigate();
   const [expanded, setExpanded] = useState(true);
 
+  const logOut=()=>{
+    localStorage.removeItem("id");
+    localStorage.removeItem("role");
+    localStorage.removeItem("token");
+    navigate("/login")
+
+  }
   return (
     <>
       <div className="flex h-[100vh]">
@@ -133,6 +140,7 @@ const AdminSidebar = () => {
               className={`flex items-center gap-6 mt-auto text-white ${
                 expanded ? "border-t border-white" : ""
               }  w-[14vw] p-3`}
+              onClick={logOut}
             >
               <span className="material-symbols-outlined">logout</span>
               {expanded && <p>Log Out</p>} {/* Show text only when expanded */}

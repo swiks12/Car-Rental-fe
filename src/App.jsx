@@ -20,6 +20,7 @@ import UserHome from "./pagesUser/UserHome";
 import SelfDrivePage from "./pagesUser/SelfDrivePage";
 import GetCars from "./pagesUser/GetCars";
 import CarDetails from "./pagesUser/CarDetails";
+import DocumentPage from "./pagesUser/DocumentPage";
 
 function App() {
   return (
@@ -53,6 +54,8 @@ function App() {
           <Route path="selfDrive" element={<SelfDrivePage/>}/>
           <Route path="getCars/:id/:bookingStartDate/:bookingEndDate" element={<GetCars/>}/>
           <Route path="carDetails/:bookingId/:carId" element={<CarDetails/>}/>
+          <Route path="document" element={<DocumentPage/>}/>
+
 
 
 

@@ -68,7 +68,7 @@ const CreateDriverListings = () => {
             <p className="text-4xl font-extrabold mb-12">
               Create Driver Listings!
             </p>
-            <form className="flex flex-col gap-5" onSubmit={handleSubmit}>
+            <form className="flex flex-col gap-5 ml-12" onSubmit={handleSubmit}>
               <input
                 type="text"
                 placeholder="Enter name"
@@ -103,7 +103,7 @@ const CreateDriverListings = () => {
               <input
                 type="submit"
                 placeholder="submit"
-                className="p-2 bg-yellow-400 rounded-2xl pl-4 pr-4 w-[10vw]  ml-[65px] font-semibold"
+                className="rounded-full  w-fit pl-6 pr-6 pt-2 pb-2 bg-black text-white hover:bg-gray-400 hover:text-black mt-8 self-center"
               />
             </form>
           </div>

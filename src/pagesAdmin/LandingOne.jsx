@@ -28,7 +28,7 @@ const LandingOne = () => {
           <button className="bg-yellow-400 text-black font-bold  pl-5 pr-5 pt-3 pb-3 text-center rounded-[10px] " onClick={()=>{navigate("/login")}}>
             Login
           </button>
-          <button className=" text-black font-bold  pl-4 pr-4 pt-2 pb-2 text-center rounded-[10px] border-yellow-300 border-[3px]" onClick={()=>{navigate("/signUp")}}>
+          <button className=" text-white font-bold  pl-4 pr-4 pt-2 pb-2 text-center rounded-[10px] bg-black" onClick={()=>{navigate("/signUp")}}>
             Sign Up
           </button>
         </div>

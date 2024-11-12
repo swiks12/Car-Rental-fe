@@ -36,7 +36,7 @@ const Package = () => {
     try {
       const url = " http://localhost:4000/package/update";
       const { data: res } = await axios.put(url, data);
-      toast.success(res.message);
+      toast.success("Package update successfull!");
     } catch (error) {
       toast.error("Cannot update data!");
     }
@@ -112,10 +112,10 @@ const Package = () => {
 
         <button
           type="submit"
-          c
+          className="rounded-full  w-fit pl-6 pr-6 pt-2 pb-2 bg-black text-white hover:bg-gray-400 hover:text-black mt-8 self-center"
           onClick={handleSubmit}
         >
-          Submit
+          Update
         </button>
       </div>
     </div>

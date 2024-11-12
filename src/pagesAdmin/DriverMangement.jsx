@@ -32,7 +32,7 @@ const DriverMangement = () => {
 
   return (
     <>
-      <div className="bg-yellow-gray w-[100vw]">
+      <div className=" w-[100vw]">
         <p className="text-4xl font-extrabold text-center w-[80vw] mt-9">
           Driver Management
         </p>
@@ -40,7 +40,7 @@ const DriverMangement = () => {
           {data.map((item, key) => (
             <div
               key={key}
-              className=" border-yellow-200 border-[2px] rounded-xl w-[12vw] flex flex-col justify-center items-center pt-4 pb-4 bg-white"
+              className=" border-gray-200 border-[2px] rounded-xl w-[12vw] flex flex-col justify-center items-center pt-4 pb-4 bg-white shadow-xl"
             >
               <img
                 src={item.image.url}

@@ -1,20 +1,28 @@
 import React from "react";
-import logo from "../assets/logo.png";
+import logo from "../assets/logo-white.png";
 import { Outlet } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 const UserNavBar = () => {
-    const navigate=useNavigate();
+  const navigate = useNavigate();
   return (
     <>
-      <div className="flex items-center ml-2 mr-5  fixed w-[100vw] bg-white  bg-opacity-20 ">
+      <div className="flex items-center  mr-5  fixed w-[100vw] bg-black  bg-opacity-60 ">
         <img src={logo} alt="logo" className="h-[12vh]" />
         <div className="flex justify-end w-full gap-12 mr-12 text-black">
-          <p className="font-bold" onClick={()=>{navigate("/user/home")}}>Home</p>
-          <p className="font-bold">Bookings</p>
-          <p className="font-bold">About</p>
-          <p className="font-bold">Contact Us</p>
-          <p className="font-bold">Profile</p>
+          <p
+            className="font-bold text-white"
+            onClick={() => {
+              navigate("/user/home");
+            }}
+          >
+            Home
+          </p>
+          <p className="font-bold text-white">Bookings</p>
+          <p className="font-bold text-white">About</p>
+          <p className="font-bold text-white">Contact Us</p>
+          <p className="font-bold text-white">Profile</p>
+          <p className="font-bold text-white">Log Out</p>
         </div>
       </div>
       <Outlet />

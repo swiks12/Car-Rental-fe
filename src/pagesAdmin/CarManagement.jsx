@@ -34,7 +34,7 @@ const CarManagement = () => {
 
   return (
     <>
-      <div className="bg-yellow-gray w-[100vw]">
+      <div className=" w-[100vw]">
         <p className="text-4xl font-extrabold text-center w-[80vw] mt-9">
           Car Management
         </p>
@@ -42,7 +42,7 @@ const CarManagement = () => {
           {cars.map((car, key) => (
             <div
               key={key}
-              className="border-yellow-200 border-[2px] rounded-xl w-[15vw] flex flex-col justify-center items-center pt-4 pb-4 bg-white"
+              className="border-gray-200 border-[2px] rounded-xl w-[15vw] flex flex-col justify-center items-center pt-4 pb-4 bg-white shadow-xl"
             >
               <img
                 src={car.image.url}

@@ -167,13 +167,13 @@ const SelfDrivePage = () => {
 
   return (
     <>
-      <img
+      {/* <img
         src={selfDrive}
         alt="selfDrive"
         className="h-[100vh] w-[100vw] object-cover z-[-1000] relative"
-      />
+      /> */}
 
-      <div className="absolute top-[90px] left-[100px] flex gap-8">
+      <div className="absolute top-[150px] left-[100px] flex gap-[100px]">
         <div style={{ height: "400px", width: "600px" }}>
           <GoogleMap
             key={mapKey}
@@ -212,12 +212,12 @@ const SelfDrivePage = () => {
           </GoogleMap>
         </div>
 
-        <div className="bg-white pl-8 pr-8 pt-12 pb-12 bg-opacity-40 rounded-lg">
-          <p className="text-center font-bold text-xl mb-2">Booking Details</p>
+        <div className="bg-white pl-8 pr-8 pt-12 pb-12 bg-opacity-40 rounded-lg border-gray-800 shadow-xl">
+          <p className="text-center font-bold text-xl mb-5">Booking Details</p>
           <form onSubmit={handleSubmit}>
             <div className="flex gap-12 justify-center">
               <div className="flex flex-col gap-2">
-                <p className="font-semibold">Booking Start Date</p>
+                <p className="font-semibold bg-black text-white pl-2 rounded-xl">Booking Start Date</p>
                 <DatePicker
                   selected={data.bookingStartDate}
                   onChange={(date) =>
@@ -230,7 +230,7 @@ const SelfDrivePage = () => {
                 />
               </div>
               <div className="flex flex-col gap-2">
-                <p className="font-semibold">Booking End Date</p>
+                <p className="font-semibold bg-black text-white pl-2 rounded-xl">Booking End Date</p>
                 <DatePicker
                   selected={data.bookingEndDate}
                   onChange={(date) =>
@@ -244,13 +244,13 @@ const SelfDrivePage = () => {
               </div>
             </div>
 
-            <p className="text-center font-bold text-xl mt-5 mb-2">
+            <p className="text-center font-bold text-xl mt-5 mb-5">
               Pick Up Details
             </p>
             <div className="flex flex-col gap-2">
               <div className="flex gap-12 justify-center">
                 <div className="flex flex-col gap-2">
-                  <p className="font-semibold">Pick Up Destination</p>
+                  <p className="font-semibold bg-black text-white pl-2 rounded-xl">Pick Up Destination</p>
                   <input
                     type="text"
                     name="pickUp"
@@ -260,7 +260,7 @@ const SelfDrivePage = () => {
                   />
                 </div>
                 <div className="flex flex-col gap-2">
-                  <p className="font-semibold">Destination</p>
+                  <p className="font-semibold bg-black text-white pl-2 rounded-xl">Destination</p>
                   {isLoaded && (
                     <StandaloneSearchBox
                       onLoad={onSearchBoxLoad}
@@ -313,7 +313,7 @@ const SelfDrivePage = () => {
             {/* New Pickup and Dropoff Time Pickers */}
             <div className="flex gap-12 justify-center mt-5">
               <div className="flex flex-col gap-2">
-                <p className="font-semibold">Pick Up Time</p>
+                <p className="font-semibold bg-black text-white pl-2 rounded-xl">Pick Up Time</p>
                 <DatePicker
                   selected={data.pickUpTime}
                   onChange={(time) => setData({ ...data, pickUpTime: time })}
@@ -327,7 +327,7 @@ const SelfDrivePage = () => {
                 />
               </div>
               <div className="flex flex-col gap-2">
-                <p className="font-semibold">Drop Off Time</p>
+                <p className="font-semibold bg-black text-white pl-2 rounded-xl">Drop Off Time</p>
                 <DatePicker
                   selected={data.dropOffTime}
                   onChange={(time) => setData({ ...data, dropOffTime: time })}
@@ -341,10 +341,10 @@ const SelfDrivePage = () => {
                 />
               </div>
             </div>
-            <div>
+            <div className="flex justify-center">
               <button
                 type="submit"
-                className="pl-4 pr-4 pt-2 pb-2 rounded-[10px] bg-black text-white w-[10vw] ml-[190px] mt-8"
+                className="rounded-full  w-fit pl-6 pr-6 pt-2 pb-2 bg-black text-white hover:bg-gray-400 hover:text-black mt-8 "
                 onClick={handleSubmit}
               >
                 Find

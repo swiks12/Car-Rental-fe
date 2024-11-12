@@ -14,11 +14,11 @@ const UserHome = () => {
           alt="bg"
           className="h-[100vh] w-[100vw] object-cover relative z-[-1000]"
         />
-        <p className="absolute top-[140px] text-white text-3xl left-12">Looking for a <span className="text-yellow-400 font-bold">Car?</span> Rent a Car in just Few Easy Steps</p>
+        <p className="absolute top-[180px] text-white text-3xl left-[180px]">Looking for a <span className="text-yellow-400 font-bold">Car?</span> Rent a Car in just Few Easy Steps</p>
         <div className="flex justify-center items-center ">
-          <div className="bg-opacity-40 absolute top-[250px] bg-white pl-6 pr-6 pt-2 pb-2 rounded-lg">
-            <div className="flex gap-[100px] w-fit p-4 ">
-              <div className="flex flex-col  gap-2 items-center pt-1 pb-1 pl-2 pr-2 border rounded-lg h-fit" onClick={()=>{navigate("/user/selfDrive")}}>
+          <div className="absolute top-[250px] bg-white p-10 rounded-lg">
+            <div className="flex gap-[100px] w-fit p-4 border-gray-300 ">
+              <div className="flex flex-col  gap-2 items-center pt-1 pb-1 pl-8 pr-8 border rounded-lg h-fit" onClick={()=>{navigate("/user/selfDrive")}}>
                 <img src={selfDrive} alt="self" className="h-[80px] w-[40px]" />
                 <p className="font-semibold">Self Drive</p>
               </div>

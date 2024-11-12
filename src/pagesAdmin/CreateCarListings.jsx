@@ -61,7 +61,7 @@ const CreateCarListings = () => {
   return (
     <>
       <div className=" bg-yellow-gray w-[100vw] h-[100vh] flex justify-center items-center flex-col gap-4 opacity-95">
-        <p className="text-4xl font-bold">Create Driver Listings</p>
+        <p className="text-4xl font-bold">Create Car Listings</p>
         <div className="bg-white bg-opacity-75 w-[55vw] pt-9 pb-9  rounded-2xl shadow-xl border ">
           <form className="flex flex-col gap-10 justify-center items-center " onSubmit={handleSubmit}>
             {/* brand and model */}
