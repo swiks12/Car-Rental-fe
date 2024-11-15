@@ -21,6 +21,7 @@ import SelfDrivePage from "./pagesUser/SelfDrivePage";
 import GetCars from "./pagesUser/GetCars";
 import CarDetails from "./pagesUser/CarDetails";
 import DocumentPage from "./pagesUser/DocumentPage";
+import RentWithDriver from "./pagesUser/RentWithDriver";
 
 function App() {
   return (
@@ -52,6 +53,7 @@ function App() {
         <Route path="/user" element={<UserNavBar/>}>
           <Route path="home" element={<UserHome/>}/>
           <Route path="selfDrive" element={<SelfDrivePage/>}/>
+          <Route path="rentWithDriver" element={<RentWithDriver/>}/>
           <Route path="getCars/:id/:bookingStartDate/:bookingEndDate" element={<GetCars/>}/>
           <Route path="carDetails/:bookingId/:carId" element={<CarDetails/>}/>
           <Route path="document" element={<DocumentPage/>}/>

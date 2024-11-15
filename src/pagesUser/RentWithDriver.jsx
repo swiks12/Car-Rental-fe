@@ -15,9 +15,12 @@ import { useNavigate } from "react-router-dom";
 const libraries = ["places", "directions"];
 const googleKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 
-const SelfDrivePage = () => {
+const RentWithDriver = () => {
   const navigate = useNavigate();
   const [destination, setDestination] = useState("");
+  const [customerPickup, setCustomerPickup] = useState("");
+  const [dropOff, setDropOff] = useState("");
+
   const [data, setData] = useState({
     bookingStartDate: null,
     bookingEndDate: null,
@@ -35,7 +38,12 @@ const SelfDrivePage = () => {
   const [distance, setDistance] = useState(null);
   const [mapKey, setMapKey] = useState(0);
   const searchBoxRef = useRef(null);
+  const dropOffBoxRef = useRef(null);
+  const customerPickUpBoxRef = useRef(null);
+
   const mapRef = useRef(null);
+
+  console.log(dropOff, "drop off location");
 
   const startDate = new Date(data.bookingStartDate);
   const endDate = new Date(data.bookingEndDate);
@@ -100,6 +108,17 @@ const SelfDrivePage = () => {
     searchBoxRef.current = ref;
   };
 
+  const kathmanduValleyBounds = {
+    north: 27.85, // approximate northern latitude of Kathmandu Valley
+    south: 27.55, // approximate southern latitude of Kathmandu Valley
+    east: 85.55, // approximate eastern longitude of Kathmandu Valley
+    west: 85.15, // approximate western longitude of Kathmandu Valley
+  };
+
+  const onDropOffBoxLoad = (ref) => {
+    dropOffBoxRef.current = ref;
+  };
+
   const onPlacesChanged = () => {
     const places = searchBoxRef.current.getPlaces();
     if (places && places.length > 0) {
@@ -114,6 +133,14 @@ const SelfDrivePage = () => {
       setSelectedRouteIndex(null);
       setDistance(null);
       setMapKey((prev) => prev + 1);
+    }
+  };
+
+  const onDropOffChanged = () => {
+    const places = dropOffBoxRef.current.getPlaces();
+    if (places && places.length > 0) {
+      const place = places[0];
+      setDropOff(place.formatted_address);
     }
   };
 
@@ -217,7 +244,9 @@ const SelfDrivePage = () => {
           <form onSubmit={handleSubmit}>
             <div className="flex gap-12 justify-center">
               <div className="flex flex-col gap-2">
-                <p className="font-semibold bg-black text-white pl-2 rounded-xl">Booking Start Date</p>
+                <p className="font-semibold bg-black text-white pl-2 rounded-xl">
+                  Booking Start Date
+                </p>
                 <DatePicker
                   selected={data.bookingStartDate}
                   onChange={(date) =>
@@ -230,7 +259,9 @@ const SelfDrivePage = () => {
                 />
               </div>
               <div className="flex flex-col gap-2">
-                <p className="font-semibold bg-black text-white pl-2 rounded-xl">Booking End Date</p>
+                <p className="font-semibold bg-black text-white pl-2 rounded-xl">
+                  Booking End Date
+                </p>
                 <DatePicker
                   selected={data.bookingEndDate}
                   onChange={(date) =>
@@ -250,7 +281,9 @@ const SelfDrivePage = () => {
             <div className="flex flex-col gap-2">
               <div className="flex gap-12 justify-center">
                 <div className="flex flex-col gap-2">
-                  <p className="font-semibold bg-black text-white pl-2 rounded-xl">Pick Up Destination</p>
+                  <p className="font-semibold bg-black text-white pl-2 rounded-xl">
+                    Pick Up Destination
+                  </p>
                   <input
                     type="text"
                     name="pickUp"
@@ -260,7 +293,9 @@ const SelfDrivePage = () => {
                   />
                 </div>
                 <div className="flex flex-col gap-2">
-                  <p className="font-semibold bg-black text-white pl-2 rounded-xl">Destination</p>
+                  <p className="font-semibold bg-black text-white pl-2 rounded-xl">
+                    Destination
+                  </p>
                   {isLoaded && (
                     <StandaloneSearchBox
                       onLoad={onSearchBoxLoad}
@@ -268,13 +303,45 @@ const SelfDrivePage = () => {
                     >
                       <input
                         type="text"
-                        name="search_input"
                         className="border w-[250px]"
                         value={destination}
                         onChange={(e) => setDestination(e.target.value)}
                         placeholder="Search destination"
                       />
                     </StandaloneSearchBox>
+                  )}
+                </div>
+
+                <div className="flex flex-col gap-2">
+                  <p className="font-semibold bg-black text-white pl-2 rounded-xl">
+                    Drop Off Location
+                  </p>
+                  {isLoaded && (
+                     <StandaloneSearchBox
+                     onLoad={onDropOffBoxLoad}
+                     onPlacesChanged={onDropOffChanged}
+                     options={{
+                       bounds: new window.google.maps.LatLngBounds(
+                         new window.google.maps.LatLng(
+                           kathmanduValleyBounds.south,
+                           kathmanduValleyBounds.west
+                         ),
+                         new window.google.maps.LatLng(
+                           kathmanduValleyBounds.north,
+                           kathmanduValleyBounds.east
+                         )
+                       ),
+                       strictBounds: true, // ensures results are restricted within the bounds
+                     }}
+                   >
+                     <input
+                       type="text"
+                       className="search-input"
+                       value={dropOff}
+                       onChange={(e) => setDropOff(e.target.value)}
+                       placeholder="Search drop-off destination"
+                     />
+                   </StandaloneSearchBox>
                   )}
                 </div>
               </div>
@@ -313,7 +380,9 @@ const SelfDrivePage = () => {
             {/* New Pickup and Dropoff Time Pickers */}
             <div className="flex gap-12 justify-center mt-5">
               <div className="flex flex-col gap-2">
-                <p className="font-semibold bg-black text-white pl-2 rounded-xl">Pick Up Time</p>
+                <p className="font-semibold bg-black text-white pl-2 rounded-xl">
+                  Pick Up Time
+                </p>
                 <DatePicker
                   selected={data.pickUpTime}
                   onChange={(time) => setData({ ...data, pickUpTime: time })}
@@ -327,7 +396,9 @@ const SelfDrivePage = () => {
                 />
               </div>
               <div className="flex flex-col gap-2">
-                <p className="font-semibold bg-black text-white pl-2 rounded-xl">Drop Off Time</p>
+                <p className="font-semibold bg-black text-white pl-2 rounded-xl">
+                  Drop Off Time
+                </p>
                 <DatePicker
                   selected={data.dropOffTime}
                   onChange={(time) => setData({ ...data, dropOffTime: time })}
@@ -357,4 +428,4 @@ const SelfDrivePage = () => {
   );
 };
 
-export default SelfDrivePage;
+export default RentWithDriver;

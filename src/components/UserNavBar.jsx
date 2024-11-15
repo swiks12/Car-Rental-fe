@@ -5,6 +5,13 @@ import { useNavigate } from "react-router-dom";
 
 const UserNavBar = () => {
   const navigate = useNavigate();
+  const logOut=()=>{
+    localStorage.removeItem("id");
+    localStorage.removeItem("role");
+    localStorage.removeItem("token");
+    navigate("/login")
+
+  }
   return (
     <>
       <div className="flex items-center  mr-5  fixed w-[100vw] bg-black  bg-opacity-60 ">
@@ -22,7 +29,7 @@ const UserNavBar = () => {
           <p className="font-bold text-white">About</p>
           <p className="font-bold text-white">Contact Us</p>
           <p className="font-bold text-white">Profile</p>
-          <p className="font-bold text-white">Log Out</p>
+          <p className="font-bold text-white " onClick={logOut}>Log Out</p>
         </div>
       </div>
       <Outlet />
