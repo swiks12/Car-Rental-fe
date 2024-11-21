@@ -34,6 +34,7 @@ const SelfDrivePage = () => {
   const [selectedRouteIndex, setSelectedRouteIndex] = useState(null);
   const [distance, setDistance] = useState(null);
   const [mapKey, setMapKey] = useState(0);
+  const[budget,setBudget]=useState(null);
   const searchBoxRef = useRef(null);
   const mapRef = useRef(null);
 
@@ -70,6 +71,7 @@ const SelfDrivePage = () => {
       dropOffTime: data.dropOffTime,
       userId: data.userId,
       bookingPeriod: bookingPeriod,
+      budget:budget
     });
     const id = res.id;
     console.log(id);
@@ -212,25 +214,30 @@ const SelfDrivePage = () => {
           </GoogleMap>
         </div>
 
-        <div className="bg-white pl-8 pr-8 pt-12 pb-12 bg-opacity-40 rounded-lg border-gray-800 shadow-xl">
+        <div className="bg-white pl-8 pr-8 pt-12 pb-12 bg-opacity-40 rounded-lg border-gray-800 shadow-xl ">
           <p className="text-center font-bold text-xl mb-5">Booking Details</p>
           <form onSubmit={handleSubmit}>
             <div className="flex gap-12 justify-center">
               <div className="flex flex-col gap-2">
-                <p className="font-semibold bg-black text-white pl-2 rounded-xl">Booking Start Date</p>
+                <p className="font-semibold bg-black text-white pl-2 rounded-xl">
+                  Booking Start Date
+                </p>
                 <DatePicker
                   selected={data.bookingStartDate}
-                  onChange={(date) =>
-                    setData({ ...data, bookingStartDate: date })
-                  }
+                  onChange={(date) => {
+                    setData({ ...data, bookingStartDate: date });
+                    console.log(date);
+                  }}
                   dateFormat="dd/MM/yyyy"
                   minDate={new Date()}
                   placeholderText="Select booking start date"
-                  className="w-[250px]"
+                  className="w-[250px] border"
                 />
               </div>
               <div className="flex flex-col gap-2">
-                <p className="font-semibold bg-black text-white pl-2 rounded-xl">Booking End Date</p>
+                <p className="font-semibold bg-black text-white pl-2 rounded-xl">
+                  Booking End Date
+                </p>
                 <DatePicker
                   selected={data.bookingEndDate}
                   onChange={(date) =>
@@ -239,7 +246,7 @@ const SelfDrivePage = () => {
                   dateFormat="dd/MM/yyyy"
                   minDate={new Date()}
                   placeholderText="Select booking end date"
-                  className="w-[250px]"
+                  className="w-[250px] border"
                 />
               </div>
             </div>
@@ -250,7 +257,9 @@ const SelfDrivePage = () => {
             <div className="flex flex-col gap-2">
               <div className="flex gap-12 justify-center">
                 <div className="flex flex-col gap-2">
-                  <p className="font-semibold bg-black text-white pl-2 rounded-xl">Pick Up Destination</p>
+                  <p className="font-semibold bg-black text-white pl-2 rounded-xl">
+                    Pick Up Destination
+                  </p>
                   <input
                     type="text"
                     name="pickUp"
@@ -260,7 +269,9 @@ const SelfDrivePage = () => {
                   />
                 </div>
                 <div className="flex flex-col gap-2">
-                  <p className="font-semibold bg-black text-white pl-2 rounded-xl">Destination</p>
+                  <p className="font-semibold bg-black text-white pl-2 rounded-xl">
+                    Destination
+                  </p>
                   {isLoaded && (
                     <StandaloneSearchBox
                       onLoad={onSearchBoxLoad}
@@ -313,7 +324,9 @@ const SelfDrivePage = () => {
             {/* New Pickup and Dropoff Time Pickers */}
             <div className="flex gap-12 justify-center mt-5">
               <div className="flex flex-col gap-2">
-                <p className="font-semibold bg-black text-white pl-2 rounded-xl">Pick Up Time</p>
+                <p className="font-semibold bg-black text-white pl-2 rounded-xl">
+                  Pick Up Time
+                </p>
                 <DatePicker
                   selected={data.pickUpTime}
                   onChange={(time) => setData({ ...data, pickUpTime: time })}
@@ -324,10 +337,13 @@ const SelfDrivePage = () => {
                   dateFormat="h:mm aa"
                   placeholderText="Select pick-up time"
                   isClearable
+                  className="border"
                 />
               </div>
               <div className="flex flex-col gap-2">
-                <p className="font-semibold bg-black text-white pl-2 rounded-xl">Drop Off Time</p>
+                <p className="font-semibold bg-black text-white pl-2 rounded-xl">
+                  Drop Off Time
+                </p>
                 <DatePicker
                   selected={data.dropOffTime}
                   onChange={(time) => setData({ ...data, dropOffTime: time })}
@@ -338,8 +354,15 @@ const SelfDrivePage = () => {
                   dateFormat="h:mm aa"
                   placeholderText="Select drop-off time"
                   isClearable
+                  className="border"
                 />
               </div>
+            </div>
+            <div className="flex flex-col gap-2 items-center">
+              <p className="font-semibold bg-black text-white pl-2 rounded-xl  w-[250px] mt-4">
+                Budget for trip
+              </p>
+              <input type="number" name="budget" className="border w-[250px]" onChange={(e)=>{setBudget(e.target.value)}} value={budget}/>
             </div>
             <div className="flex justify-center">
               <button
