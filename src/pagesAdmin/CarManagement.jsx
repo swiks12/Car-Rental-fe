@@ -53,7 +53,7 @@ const CarManagement = () => {
               <p className="text-gray-600">{car.model}</p>
               <p className="text-gray-500">{car.numberPlate}</p>
               <div className="flex gap-5 mt-2">
-                <div
+                <button
                   onClick={() => {
                     navigate(`/admin/carmgmt/update/${car._id}`);
                   }}
@@ -61,8 +61,8 @@ const CarManagement = () => {
                   <span className="material-symbols-outlined text-blue-600">
                     edit
                   </span>
-                </div>
-                <div
+                </button>
+                <button
                   onClick={() => {
                     handleDelete(car._id);
                   }}
@@ -70,7 +70,7 @@ const CarManagement = () => {
                   <span className="material-symbols-outlined text-red-500">
                     delete
                   </span>
-                </div>
+                </button>
               </div>
             </div>
           ))}

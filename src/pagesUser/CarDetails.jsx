@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const CarDetails = () => {
   const { bookingId, carId } = useParams();
@@ -8,6 +9,9 @@ const CarDetails = () => {
   const [packageData, setPackageData] = useState(null);
   const [bookingData, setBookingData] = useState(null);
   const [amount, setAmount] = useState(null);
+  const [bookedDriverIds,setBookedDriverIds]=useState(null);
+  const [availableDriver,setAvailableDriver]=useState(null);
+
 
   // Fetch car details
   useEffect(() => {
@@ -51,37 +55,110 @@ const CarDetails = () => {
     fetchBookingInfo();
   }, [bookingId]);
 
+
+  // fetching ids of booked drivers
+  useEffect(() => {
+    const fetchBookedDriverIds = async () => {
+      if (!bookingData) return; // Ensure bookingData is available
+      try {
+        const { data } = await axios.get(
+          `http://localhost:4000/booking/getBookedDriverIds/${bookingData.bookingStartDate}/${bookingData.bookingEndDate}`
+        );
+        setBookedDriverIds(data.bookedDriverIds || []);
+      } catch (e) {
+        console.error(e);
+      }
+    };
+  
+    fetchBookedDriverIds();
+  }, [bookingData]); // Depend only on bookingData
+  
+
+
+// fetch all available drivers
+useEffect(() => {
+  const fetchAvailableDrivers = async () => {
+    try {
+      const { data: allDrivers } = await axios.get(
+        "http://localhost:4000/driver/get"
+      );
+      const availableDrivers = allDrivers.filter(
+        (driver) => !bookedDriverIds.includes(driver._id)
+      );
+      setAvailableDriver(availableDrivers);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  fetchAvailableDrivers();
+}, [bookedDriverIds]);
+
+
   // Calculate amount based on conditions
   useEffect(() => {
     if (car && packageData && bookingData) {
       let calculatedAmount = 0;
-      if (bookingData.distance <= packageData.shortDistancePackage) {
-        calculatedAmount =
-          car.shortDistanceBasePrice * bookingData.bookingPeriod;
-      } else if (
-        bookingData.distance > packageData.shortDistancePackage &&
-        bookingData.distance <= packageData.longDistancePackage
-      ) {
-        calculatedAmount =
-          car.longDistanceBasePrice * bookingData.bookingPeriod;
+      if (bookingData.rentalType == "selfDrive") {
+        if (bookingData.distance <= packageData.shortDistancePackage) {
+          calculatedAmount =
+            car.shortDistanceBasePrice * bookingData.bookingPeriod;
+        } else if (
+          bookingData.distance > packageData.shortDistancePackage &&
+          bookingData.distance <= packageData.longDistancePackage
+        ) {
+          calculatedAmount =
+            car.longDistanceBasePrice * bookingData.bookingPeriod;
+        } else {
+          calculatedAmount = null; // For cases outside package limits
+        }
+        setAmount(calculatedAmount);
       } else {
-        calculatedAmount = null; // For cases outside package limits
+        if (bookingData.distance <= packageData.shortDistancePackage) {
+          calculatedAmount =
+            car.shortDistanceBasePrice * bookingData.bookingPeriod +
+            packageData.driverShortDistance * bookingData.bookingPeriod;
+        } else if (
+          bookingData.distance > packageData.shortDistancePackage &&
+          bookingData.distance <= packageData.longDistancePackage
+        ) {
+          calculatedAmount =
+            car.longDistanceBasePrice * bookingData.bookingPeriod +
+            packageData.driverLongDistance * bookingData.bookingPeriod;
+        } else {
+          calculatedAmount = null; // For cases outside package limits
+        }
+        setAmount(calculatedAmount);
       }
-      setAmount(calculatedAmount);
     }
   }, [car, packageData, bookingData]);
 
+
+
   const handleSubmit = async () => {
+
     try {
-      const url = `http://localhost:4000/booking/updateBookingInfo/${bookingId}`;
-      const { data: res } = await axios.patch(url, {
-        carId: carId,
-        bookedAmount: amount,
-        bookingStatus: "booked",
-      });
-      console.log(res.message)
+      if (bookingData.rentalType == "selfDrive") {
+        const url = `http://localhost:4000/booking/updateBookingInfo/${bookingId}`;
+        const { data: res } = await axios.patch(url, {
+          carId: carId,
+          bookedAmount: amount,
+          bookingStatus: "booked",
+        });
+      }else{
+        const randomIndex = Math.floor(Math.random() * availableDriver.length);
+        const selectedDriverId = availableDriver[randomIndex]._id;
+        const url = `http://localhost:4000/booking/updateBookingInfo/${bookingId}`;
+        const { data: res } = await axios.patch(url, {
+          carId: carId,
+          bookedAmount: amount,
+          bookingStatus: "booked",
+          driverId:selectedDriverId,
+        });
+      }
+      toast.success("Booking Successfull!")
     } catch (error) {
       console.log(e);
+      toast.error(error)
     }
   };
 

@@ -22,7 +22,7 @@ const UserHome = () => {
                 <img src={selfDrive} alt="self" className="h-[80px] w-[40px]" />
                 <p className="font-semibold">Self Drive</p>
               </div>
-              <div className="flex flex-col gap-2 items-center   pt-1 pb-1 pl-2 pr-2 border rounded-lg h-fit">
+              <div className="flex flex-col gap-2 items-center   pt-1 pb-1 pl-2 pr-2 border rounded-lg h-fit" onClick={()=>{navigate("/user/rentwithDriver")}}>
                 <img 
                   src={withDriver}
                   alt="withDriver"

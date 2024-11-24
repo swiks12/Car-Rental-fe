@@ -3,7 +3,7 @@ import loginCar from "../assets/loginCar.avif";
 import { Link, useNavigate } from "react-router-dom";
 import Button from "../components/Button";
 import SignUp from "./SignUp";
-import { ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import axios from "axios";
 const Login = () => {
   const navigate = useNavigate();
@@ -33,15 +33,19 @@ const Login = () => {
 
       if (res.role == "user") {
         navigate("/user/home");
+        toast.success("Login Succesfull!")
       } else {
+        toast.success("Login Succesfull!")
         navigate("/admin/dashboard");
       }
-    } catch (error) {}
+    } catch (error) {
+      toast.error(error)
+    }
   };
 
   return (
     <div className="flex justify-center items-center h-[100vh]">
-      <div className="m-5 rounded-3xl border-gray-300 border-2 shadow-xl  ">
+      <div className="m-5 rounded-3xl border-gray-300 border-2 shadow-xl pr-12">
         <div className="flex gap-[120px] place-content-center ">
           <img
             src={loginCar}
@@ -80,7 +84,6 @@ const Login = () => {
               </Link>
             </p>
           </form>
-          <ToastContainer />
         </div>
       </div>
     </div>

@@ -25,47 +25,53 @@ import RentWithDriver from "./pagesUser/RentWithDriver";
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        {/* Public routes */}
-        <Route path="/" element={<LandingPage />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<SignUp />} />
-        <Route path="/userDashboard" element={<UserDashboard />} />
+    <>
+      <BrowserRouter>
+        <Routes>
+          {/* Public routes */}
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/userDashboard" element={<UserDashboard />} />
 
-        {/* Admin routes */}
-        <Route path="/admin" element={<AdminSidebar />}>
-          {/* Nested admin dashboard route */}
-          <Route path="dashboard" element={<AdminDashboard />} />
-          {/* driver management ma view ko pani kaam huncha */}
-          <Route path="drivermgmt" element={<DriverMangement />} />
-          <Route path="drivermgmt/create" element={<CreateDriverListings />} />
-          <Route path="drivermgmt/update/:id" element={<UpdateDriver />} />
+          {/* Admin routes */}
+          <Route path="/admin" element={<AdminSidebar />}>
+            {/* Nested admin dashboard route */}
+            <Route path="dashboard" element={<AdminDashboard />} />
+            {/* driver management ma view ko pani kaam huncha */}
+            <Route path="drivermgmt" element={<DriverMangement />} />
+            <Route
+              path="drivermgmt/create"
+              element={<CreateDriverListings />}
+            />
+            <Route path="drivermgmt/update/:id" element={<UpdateDriver />} />
 
-          <Route path="carmgmt" element={<CarManagement />} />
-          <Route path="carmgmt/create" element={<CreateCarListings />} />
-          <Route path="carmgmt/update/:id" element={<UpdateCars />} />
+            <Route path="carmgmt" element={<CarManagement />} />
+            <Route path="carmgmt/create" element={<CreateCarListings />} />
+            <Route path="carmgmt/update/:id" element={<UpdateCars />} />
 
-          <Route path="package" element={<Package />} />
-        </Route>
+            <Route path="package" element={<Package />} />
+          </Route>
 
-        {/* user routes */}
-        <Route path="/user" element={<UserNavBar/>}>
-          <Route path="home" element={<UserHome/>}/>
-          <Route path="selfDrive" element={<SelfDrivePage/>}/>
-          <Route path="rentWithDriver" element={<RentWithDriver/>}/>
-          <Route path="getCars/:id/:bookingStartDate/:bookingEndDate" element={<GetCars/>}/>
-          <Route path="carDetails/:bookingId/:carId" element={<CarDetails/>}/>
-          <Route path="document" element={<DocumentPage/>}/>
-
-
-
-
-
-        </Route>
-      </Routes>
+          {/* user routes */}
+          <Route path="/user" element={<UserNavBar />}>
+            <Route path="home" element={<UserHome />} />
+            <Route path="selfDrive" element={<SelfDrivePage />} />
+            <Route path="rentWithDriver" element={<RentWithDriver />} />
+            <Route
+              path="getCars/:id/:bookingStartDate/:bookingEndDate"
+              element={<GetCars />}
+            />
+            <Route
+              path="carDetails/:bookingId/:carId"
+              element={<CarDetails />}
+            />
+            <Route path="document" element={<DocumentPage />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
       <ToastContainer />
-    </BrowserRouter>
+    </>
   );
 }
 

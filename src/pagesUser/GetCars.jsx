@@ -80,9 +80,11 @@ const GetCars = () => {
       // Compute proximity scores
       const budget = bookingData.budget; // Assuming bookingData contains the user's budget
       const recommended = carData.map((car) => {
-        const distance = bookingData.distance; // Replace with actual booking data
+        const distance = bookingData.distance; 
         const bookingPeriod = bookingData.bookingPeriod;
-        const price = calculatePrice(car, distance, bookingPeriod);
+        const rentalType=bookingData.rentalType;
+        console.log(rentalType)
+        const price = calculatePrice(car, distance, bookingPeriod,rentalType);
 
         const proximityScore = price
           ? 1 - Math.abs(price - budget) / budget
@@ -101,21 +103,38 @@ const GetCars = () => {
     }
   }, [carData, bookingData]);
 
-  const calculatePrice = (car, distance, bookingPeriod) => {
+  const calculatePrice = (car, distance, bookingPeriod,rentalType) => {
     if (!packageData) return null;
     let calculatedAmount = 0;
-
-    if (distance <= packageData.shortDistancePackage) {
-      calculatedAmount = car.shortDistanceBasePrice * bookingPeriod;
-    } else if (
-      distance > packageData.shortDistancePackage &&
-      distance <= packageData.longDistancePackage
-    ) {
-      calculatedAmount = car.longDistanceBasePrice * bookingPeriod;
-    } else {
-      calculatedAmount = null;
+    console.log(rentalType,"yaha bata aayo");
+    if(rentalType=="selfDrive"){
+      if (distance <= packageData.shortDistancePackage) {
+        calculatedAmount = car.shortDistanceBasePrice * bookingPeriod;
+        
+      } else if (
+        distance > packageData.shortDistancePackage &&
+        distance <= packageData.longDistancePackage
+      ) {
+        calculatedAmount = car.longDistanceBasePrice * bookingPeriod;
+      } else {
+        calculatedAmount = null;
+      }
+      return calculatedAmount;
+    }else{
+      //rent with driver amount calculation
+      if (distance <= packageData.shortDistancePackage) {
+        calculatedAmount = car.shortDistanceBasePrice * bookingPeriod+packageData.driverShortDistance*bookingPeriod;
+        
+      } else if (
+        distance > packageData.shortDistancePackage &&
+        distance <= packageData.longDistancePackage
+      ) {
+        calculatedAmount = car.longDistanceBasePrice * bookingPeriod+packageData.driverLongDistance*bookingPeriod;
+      } else {
+        calculatedAmount = null;
+      }
+      return calculatedAmount;
     }
-    return calculatedAmount;
   };
 
   return (
@@ -125,7 +144,8 @@ const GetCars = () => {
         {carData.map((car) => {
           const distance = bookingData?.distance;
           const bookingPeriod = bookingData?.bookingPeriod;
-          const amount = calculatePrice(car, distance, bookingPeriod);
+          const rentalType=bookingData?.rentalType;
+          const amount = calculatePrice(car, distance, bookingPeriod,rentalType);
 
           return (
             <div

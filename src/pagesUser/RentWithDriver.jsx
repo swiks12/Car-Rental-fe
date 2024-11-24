@@ -20,6 +20,7 @@ const RentWithDriver = () => {
   const [destination, setDestination] = useState("");
   const [customerPickup, setCustomerPickup] = useState("");
   const [dropOff, setDropOff] = useState("");
+  const [budget,setBudget]=useState(null);
 
   const [data, setData] = useState({
     bookingStartDate: null,
@@ -78,6 +79,10 @@ const RentWithDriver = () => {
       dropOffTime: data.dropOffTime,
       userId: data.userId,
       bookingPeriod: bookingPeriod,
+      customerPickUp:customerPickup,
+      customerDropOff:dropOff,
+      rentalType:"rentWithDriver",
+      budget:budget
     });
     const id = res.id;
     console.log(id);
@@ -119,6 +124,10 @@ const RentWithDriver = () => {
     dropOffBoxRef.current = ref;
   };
 
+  const onCustomerPickUpBoxLoad = (ref) => {
+    customerPickUpBoxRef.current = ref;
+  };
+
   const onPlacesChanged = () => {
     const places = searchBoxRef.current.getPlaces();
     if (places && places.length > 0) {
@@ -136,11 +145,21 @@ const RentWithDriver = () => {
     }
   };
 
+  //drop off customer
   const onDropOffChanged = () => {
     const places = dropOffBoxRef.current.getPlaces();
     if (places && places.length > 0) {
       const place = places[0];
       setDropOff(place.formatted_address);
+    }
+  };
+
+  //customer pick up Location
+  const onCustomerPickUpChanged = () => {
+    const places = customerPickUpBoxRef.current.getPlaces();
+    if (places && places.length > 0) {
+      const place = places[0];
+      setCustomerPickup(place.formatted_address);
     }
   };
 
@@ -199,7 +218,6 @@ const RentWithDriver = () => {
         alt="selfDrive"
         className="h-[100vh] w-[100vw] object-cover z-[-1000] relative"
       /> */}
-
       <div className="absolute top-[150px] left-[100px] flex gap-[100px]">
         <div style={{ height: "400px", width: "600px" }}>
           <GoogleMap
@@ -240,7 +258,6 @@ const RentWithDriver = () => {
         </div>
 
         <div className="bg-white pl-8 pr-8 pt-12 pb-12 bg-opacity-40 rounded-lg border-gray-800 shadow-xl">
-          <p className="text-center font-bold text-xl mb-5">Booking Details</p>
           <form onSubmit={handleSubmit}>
             <div className="flex gap-12 justify-center">
               <div className="flex flex-col gap-2">
@@ -255,7 +272,7 @@ const RentWithDriver = () => {
                   dateFormat="dd/MM/yyyy"
                   minDate={new Date()}
                   placeholderText="Select booking start date"
-                  className="w-[250px]"
+                  className="w-[250px] border"
                 />
               </div>
               <div className="flex flex-col gap-2">
@@ -270,19 +287,16 @@ const RentWithDriver = () => {
                   dateFormat="dd/MM/yyyy"
                   minDate={new Date()}
                   placeholderText="Select booking end date"
-                  className="w-[250px]"
+                  className="w-[250px] border"
                 />
               </div>
             </div>
 
-            <p className="text-center font-bold text-xl mt-5 mb-5">
-              Pick Up Details
-            </p>
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-2 mt-4">
               <div className="flex gap-12 justify-center">
                 <div className="flex flex-col gap-2">
                   <p className="font-semibold bg-black text-white pl-2 rounded-xl">
-                    Pick Up Destination
+                    Organization Location
                   </p>
                   <input
                     type="text"
@@ -311,37 +325,74 @@ const RentWithDriver = () => {
                     </StandaloneSearchBox>
                   )}
                 </div>
+              </div>
+              {/* div to make pickyp and drop moff  */}
+              <div className="flex gap-12 justify-center">
+                {/* Pickup Location */}
+                <div className="flex flex-col gap-2">
+                  <p className="font-semibold bg-black text-white pl-2 rounded-xl">
+                    Pick Up location
+                  </p>
+                  {isLoaded && (
+                    <StandaloneSearchBox
+                      onLoad={onCustomerPickUpBoxLoad}
+                      onPlacesChanged={onCustomerPickUpChanged}
+                      options={{
+                        bounds: new window.google.maps.LatLngBounds(
+                          new window.google.maps.LatLng(
+                            kathmanduValleyBounds.south,
+                            kathmanduValleyBounds.west
+                          ),
+                          new window.google.maps.LatLng(
+                            kathmanduValleyBounds.north,
+                            kathmanduValleyBounds.east
+                          )
+                        ),
+                        strictBounds: true, // ensures results are restricted within the bounds
+                      }}
+                    >
+                      <input
+                        type="text"
+                        className="search-input w-[250px] border"
+                        value={customerPickup}
+                        onChange={(e) => setCustomerPickup(e.target.value)}
+                        placeholder="Search pick-Up Location"
+                      />
+                    </StandaloneSearchBox>
+                  )}
+                </div>
 
+                {/* Drop off location */}
                 <div className="flex flex-col gap-2">
                   <p className="font-semibold bg-black text-white pl-2 rounded-xl">
                     Drop Off Location
                   </p>
                   {isLoaded && (
-                     <StandaloneSearchBox
-                     onLoad={onDropOffBoxLoad}
-                     onPlacesChanged={onDropOffChanged}
-                     options={{
-                       bounds: new window.google.maps.LatLngBounds(
-                         new window.google.maps.LatLng(
-                           kathmanduValleyBounds.south,
-                           kathmanduValleyBounds.west
-                         ),
-                         new window.google.maps.LatLng(
-                           kathmanduValleyBounds.north,
-                           kathmanduValleyBounds.east
-                         )
-                       ),
-                       strictBounds: true, // ensures results are restricted within the bounds
-                     }}
-                   >
-                     <input
-                       type="text"
-                       className="search-input"
-                       value={dropOff}
-                       onChange={(e) => setDropOff(e.target.value)}
-                       placeholder="Search drop-off destination"
-                     />
-                   </StandaloneSearchBox>
+                    <StandaloneSearchBox
+                      onLoad={onDropOffBoxLoad}
+                      onPlacesChanged={onDropOffChanged}
+                      options={{
+                        bounds: new window.google.maps.LatLngBounds(
+                          new window.google.maps.LatLng(
+                            kathmanduValleyBounds.south,
+                            kathmanduValleyBounds.west
+                          ),
+                          new window.google.maps.LatLng(
+                            kathmanduValleyBounds.north,
+                            kathmanduValleyBounds.east
+                          )
+                        ),
+                        strictBounds: true, // ensures results are restricted within the bounds
+                      }}
+                    >
+                      <input
+                        type="text"
+                        className="search-input w-[250px] border"
+                        value={dropOff}
+                        onChange={(e) => setDropOff(e.target.value)}
+                        placeholder="Search drop-off destination"
+                      />
+                    </StandaloneSearchBox>
                   )}
                 </div>
               </div>
@@ -393,6 +444,7 @@ const RentWithDriver = () => {
                   dateFormat="h:mm aa"
                   placeholderText="Select pick-up time"
                   isClearable
+                  className="border"
                 />
               </div>
               <div className="flex flex-col gap-2">
@@ -409,8 +461,15 @@ const RentWithDriver = () => {
                   dateFormat="h:mm aa"
                   placeholderText="Select drop-off time"
                   isClearable
+                  className="border"
                 />
               </div>
+            </div>
+            <div className="flex flex-col gap-2 items-center">
+              <p className="font-semibold bg-black text-white pl-2 rounded-xl  w-[250px] mt-4">
+                Budget for trip
+              </p>
+              <input type="number" name="budget" className="border w-[250px]" onChange={(e)=>{setBudget(e.target.value)}} value={budget}/>
             </div>
             <div className="flex justify-center">
               <button
