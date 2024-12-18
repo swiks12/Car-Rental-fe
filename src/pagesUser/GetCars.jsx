@@ -80,11 +80,11 @@ const GetCars = () => {
       // Compute proximity scores
       const budget = bookingData.budget; // Assuming bookingData contains the user's budget
       const recommended = carData.map((car) => {
-        const distance = bookingData.distance; 
+        const distance = bookingData.distance;
         const bookingPeriod = bookingData.bookingPeriod;
-        const rentalType=bookingData.rentalType;
-        console.log(rentalType)
-        const price = calculatePrice(car, distance, bookingPeriod,rentalType);
+        const rentalType = bookingData.rentalType;
+        console.log(rentalType);
+        const price = calculatePrice(car, distance, bookingPeriod, rentalType);
 
         const proximityScore = price
           ? 1 - Math.abs(price - budget) / budget
@@ -103,14 +103,13 @@ const GetCars = () => {
     }
   }, [carData, bookingData]);
 
-  const calculatePrice = (car, distance, bookingPeriod,rentalType) => {
+  const calculatePrice = (car, distance, bookingPeriod, rentalType) => {
     if (!packageData) return null;
     let calculatedAmount = 0;
-    console.log(rentalType,"yaha bata aayo");
-    if(rentalType=="selfDrive"){
+    console.log(rentalType, "yaha bata aayo");
+    if (rentalType === "selfDrive") {
       if (distance <= packageData.shortDistancePackage) {
         calculatedAmount = car.shortDistanceBasePrice * bookingPeriod;
-        
       } else if (
         distance > packageData.shortDistancePackage &&
         distance <= packageData.longDistancePackage
@@ -120,16 +119,19 @@ const GetCars = () => {
         calculatedAmount = null;
       }
       return calculatedAmount;
-    }else{
-      //rent with driver amount calculation
+    } else {
+      // Rent with driver amount calculation
       if (distance <= packageData.shortDistancePackage) {
-        calculatedAmount = car.shortDistanceBasePrice * bookingPeriod+packageData.driverShortDistance*bookingPeriod;
-        
+        calculatedAmount =
+          car.shortDistanceBasePrice * bookingPeriod +
+          packageData.driverShortDistance * bookingPeriod;
       } else if (
         distance > packageData.shortDistancePackage &&
         distance <= packageData.longDistancePackage
       ) {
-        calculatedAmount = car.longDistanceBasePrice * bookingPeriod+packageData.driverLongDistance*bookingPeriod;
+        calculatedAmount =
+          car.longDistanceBasePrice * bookingPeriod +
+          packageData.driverLongDistance * bookingPeriod;
       } else {
         calculatedAmount = null;
       }
@@ -144,8 +146,8 @@ const GetCars = () => {
         {carData.map((car) => {
           const distance = bookingData?.distance;
           const bookingPeriod = bookingData?.bookingPeriod;
-          const rentalType=bookingData?.rentalType;
-          const amount = calculatePrice(car, distance, bookingPeriod,rentalType);
+          const rentalType = bookingData?.rentalType;
+          const amount = calculatePrice(car, distance, bookingPeriod, rentalType);
 
           return (
             <div
@@ -174,7 +176,9 @@ const GetCars = () => {
                 )}
                 <button
                   className="pl-1 pr-1 bg-yellow-400 rounded-lg self-end "
-                  onClick={() => navigate(`/user/carDetails/${bookingId}/${car._id}`)}
+                  onClick={() =>
+                    navigate(`/user/carDetails/${bookingId}/${car._id}`)
+                  }
                 >
                   Details
                 </button>
@@ -185,37 +189,43 @@ const GetCars = () => {
       </div>
 
       <h1 className="text-2xl font-bold mt-8 mb-4">Recommended cars suiting your budget!</h1>
-      <div className="flex gap-12">
-        {recommendedCars.map((car) => (
-          <div
-            key={car._id}
-            className="border-[2px] rounded-xl w-[20vw] flex flex-col justify-center items-center pt-4 pb-4 bg-white pl-3 pr-3"
-          >
-            <img
-              src={car.image.url}
-              alt="CarPhoto"
-              className="h-[110px] w-[15vw] object-cover rounded-xl"
-            />
-            <div className="flex gap-2 items-center mt-2">
-              <p className="font-semibold ">{car.brand}</p>
-              <p className="text-gray-600">-{car.model}</p>
+      {recommendedCars.length > 0 ? (
+        <div className="flex gap-12">
+          {recommendedCars.map((car) => (
+            <div
+              key={car._id}
+              className="border-[2px] rounded-xl w-[20vw] flex flex-col justify-center items-center pt-4 pb-4 bg-white pl-3 pr-3"
+            >
+              <img
+                src={car.image.url}
+                alt="CarPhoto"
+                className="h-[110px] w-[15vw] object-cover rounded-xl"
+              />
+              <div className="flex gap-2 items-center mt-2">
+                <p className="font-semibold ">{car.brand}</p>
+                <p className="text-gray-600">-{car.model}</p>
+              </div>
+              <div className="flex gap-8 items-center">
+                <p className="font-bold mt-3 text-yellow-400 bg-black pl-1 pt-1 pr-1 pb-1 rounded-lg">
+                  Rs.{car.price}
+                </p>
+                <button
+                  className="pl-1 pr-1 bg-yellow-400 rounded-lg self-end"
+                  onClick={() =>
+                    navigate(`/user/carDetails/${bookingId}/${car._id}`)
+                  }
+                >
+                  Details
+                </button>
+              </div>
             </div>
-            <div className="flex gap-8 items-center">
-              <p className="font-bold mt-3 text-yellow-400 bg-black pl-1 pt-1 pr-1 pb-1 rounded-lg">
-                Rs.{car.price}
-              </p>
-              <button
-                className="pl-1 pr-1 bg-yellow-400 rounded-lg self-end"
-                onClick={() =>
-                  navigate(`/user/carDetails/${bookingId}/${car._id}`)
-                }
-              >
-                Details
-              </button>
-            </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      ) : (
+        <p className="text-red-500 font-bold text-lg mt-4">
+          Cannot view cars according to your budget.
+        </p>
+      )}
     </div>
   );
 };

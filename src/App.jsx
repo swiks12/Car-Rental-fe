@@ -23,6 +23,7 @@ import CarDetails from "./pagesUser/CarDetails";
 import RentWithDriver from "./pagesUser/RentWithDriver";
 import UserBookings from "./pagesUser/UserBookings";
 import GetUsers from "./pagesAdmin/GetUsers";
+import CancelPage from "./pagesUser/CancelPage";
 
 function App() {
   return (
@@ -68,7 +69,8 @@ function App() {
               path="carDetails/:bookingId/:carId"
               element={<CarDetails />}
             />
-            <Route path="userBookings" element={<UserBookings/>}/>
+            <Route path="userBookings/" element={<UserBookings/>}/>
+            <Route path="cancel" element={<CancelPage/>}/>
           </Route>
         </Routes>
       </BrowserRouter>

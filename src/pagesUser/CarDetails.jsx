@@ -9,9 +9,8 @@ const CarDetails = () => {
   const [packageData, setPackageData] = useState(null);
   const [bookingData, setBookingData] = useState(null);
   const [amount, setAmount] = useState(null);
-  const [bookedDriverIds,setBookedDriverIds]=useState(null);
-  const [availableDriver,setAvailableDriver]=useState(null);
-
+  const [bookedDriverIds, setBookedDriverIds] = useState(null);
+  const [availableDriver, setAvailableDriver] = useState(null);
 
   // Fetch car details
   useEffect(() => {
@@ -55,7 +54,6 @@ const CarDetails = () => {
     fetchBookingInfo();
   }, [bookingId]);
 
-
   // fetching ids of booked drivers
   useEffect(() => {
     const fetchBookedDriverIds = async () => {
@@ -65,34 +63,32 @@ const CarDetails = () => {
           `http://localhost:4000/booking/getBookedDriverIds/${bookingData.bookingStartDate}/${bookingData.bookingEndDate}`
         );
         setBookedDriverIds(data.bookedDriverIds || []);
+        console.log(bookedDriverIds,"booked driver ids")
       } catch (e) {
         console.error(e);
       }
     };
-  
+
     fetchBookedDriverIds();
   }, [bookingData]); // Depend only on bookingData
-  
 
-
-// fetch all available drivers
-useEffect(() => {
-  const fetchAvailableDrivers = async () => {
-    try {
-      const { data: allDrivers } = await axios.get(
-        "http://localhost:4000/driver/get"
-      );
-      const availableDrivers = allDrivers.filter(
-        (driver) => !bookedDriverIds.includes(driver._id)
-      );
-      setAvailableDriver(availableDrivers);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-  fetchAvailableDrivers();
-}, [bookedDriverIds]);
-
+  // fetch all available drivers
+  useEffect(() => {
+    const fetchAvailableDrivers = async () => {
+      try {
+        const { data: allDrivers } = await axios.get(
+          "http://localhost:4000/driver/get"
+        );
+        const availableDrivers = allDrivers.filter(
+          (driver) => !bookedDriverIds.includes(driver._id)
+        );
+        setAvailableDriver(availableDrivers);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchAvailableDrivers();
+  }, [bookedDriverIds]);
 
   // Calculate amount based on conditions
   useEffect(() => {
@@ -132,10 +128,7 @@ useEffect(() => {
     }
   }, [car, packageData, bookingData]);
 
-
-
   const handleSubmit = async () => {
-
     try {
       if (bookingData.rentalType == "selfDrive") {
         const url = `http://localhost:4000/booking/updateBookingInfo/${bookingId}`;
@@ -144,21 +137,34 @@ useEffect(() => {
           bookedAmount: amount,
           bookingStatus: "booked",
         });
-      }else{
+      } else {
         const randomIndex = Math.floor(Math.random() * availableDriver.length);
         const selectedDriverId = availableDriver[randomIndex]._id;
+        console.log(selectedDriverId)
         const url = `http://localhost:4000/booking/updateBookingInfo/${bookingId}`;
         const { data: res } = await axios.patch(url, {
           carId: carId,
           bookedAmount: amount,
           bookingStatus: "booked",
-          driverId:selectedDriverId,
+          driverId: selectedDriverId,
         });
+        try {
+          const url = "http://localhost:4000/stripe/create-checkout-session";
+          const { data: res } = await axios.post(url, {
+            bookingId: bookingId,
+            price: amount,
+            name: "rentedCar",
+          });
+          window.location.href = res.url;
+        } catch (error) {
+          console.log("Error creating checkout session", error);
+        }
       }
-      toast.success("Booking Successfull!")
+
+      toast.success("Booking Successfull!");
     } catch (error) {
       console.log(e);
-      toast.error(error)
+      toast.error(error);
     }
   };
 

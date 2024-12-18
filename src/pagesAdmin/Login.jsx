@@ -26,22 +26,26 @@ const Login = () => {
     try {
       const url = "http://localhost:4000/auth/login";
       const { data: res } = await axios.post(url, data);
-      console.log(res);
+      if (!res.success) {
+        return toast.error(res.message);
+      }
+  
       localStorage.setItem("token", res.token);
       localStorage.setItem("role", res.role);
       localStorage.setItem("id", res.userId);
-
-      if (res.role == "user") {
+  
+      if (res.role === "user") {
         navigate("/user/home");
-        toast.success("Login Succesfull!")
       } else {
-        toast.success("Login Succesfull!")
         navigate("/admin/dashboard");
       }
+      toast.success(res.message);
     } catch (error) {
-      toast.error(error)
+      const errorMsg = error.response?.data?.message || "Something went wrong!";
+      toast.error(errorMsg);
     }
   };
+  
 
   return (
     <div className="flex justify-center items-center h-[100vh]">
