@@ -24,6 +24,10 @@ import RentWithDriver from "./pagesUser/RentWithDriver";
 import UserBookings from "./pagesUser/UserBookings";
 import GetUsers from "./pagesAdmin/GetUsers";
 import CancelPage from "./pagesUser/CancelPage";
+import SelfDriveBookings from "./pagesUser/SelfDriveBookings";
+import About from "./pagesUser/About";
+import Bookings from "./pagesUser/Bookings";
+import AdminViewBookings from "./pagesAdmin/AdminViewBookings";
 
 function App() {
   return (
@@ -54,6 +58,7 @@ function App() {
 
             <Route path="package" element={<Package />} />
             <Route path="user" element={<GetUsers />} />
+            <Route path="viewBookings" element={<AdminViewBookings />} />
           </Route>
 
           {/* user routes */}
@@ -71,6 +76,9 @@ function App() {
             />
             <Route path="userBookings/" element={<UserBookings/>}/>
             <Route path="cancel" element={<CancelPage/>}/>
+            <Route path="selfDriveBookings" element={<SelfDriveBookings/>}/>
+            <Route path="about" element={<About/>}/>
+            <Route path="bookings" element={<Bookings/>}/>
           </Route>
         </Routes>
       </BrowserRouter>

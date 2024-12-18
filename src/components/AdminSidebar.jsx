@@ -75,7 +75,7 @@ const AdminSidebar = () => {
               )}
 
               <div
-                className="flex items-center gap-6 text-white "
+                className="flex items-center gap-6 text-white cursor-pointer "
                 onClick={() => {
                   navigate("/admin/package");
                 }}
@@ -83,12 +83,12 @@ const AdminSidebar = () => {
                 <span className="material-symbols-outlined">
                   swap_driving_apps_wheel
                 </span>
-                {expanded && <p>Package</p>}{" "}
+                {expanded && <p >Package</p>}{" "}
                 {/* Show text only when expanded */}
               </div>
 
               <div
-                className="flex items-center gap-6 text-white "
+                className="flex items-center gap-6 text-white cursor-pointer"
                 onClick={() => {
                   navigate("/admin/carmgmt");
                 }}
@@ -100,7 +100,7 @@ const AdminSidebar = () => {
               </div>
 
               <div
-                className="flex items-center gap-6 text-white"
+                className="flex items-center gap-6 text-white cursor-pointer"
                 onClick={() => {
                   navigate("/admin/drivermgmt");
                 }}
@@ -111,7 +111,7 @@ const AdminSidebar = () => {
                 {expanded && <p>Driver</p>} {/* Show text only when expanded */}
               </div>
 
-              <div className="flex items-center gap-6 text-white" onClick={()=>{
+              <div className="flex items-center gap-6 text-white cursor-pointer" onClick={()=>{
                 navigate("/admin/user")
               }}>
                 <span className="material-symbols-outlined">group</span>
@@ -127,19 +127,15 @@ const AdminSidebar = () => {
                 </div>
               )}
 
-              <div className="flex items-center gap-6 text-white">
-                <span className="material-symbols-outlined">new_releases</span>
-                {expanded && <p>Verification Requests</p>}{" "}
-                {/* Show text only when expanded */}
-              </div>
+              
 
-              <div className="flex items-center gap-6 text-white">
+              <div className="flex items-center gap-6 text-white cursor-pointer">
                 <span className="material-symbols-outlined">laptop_car</span>
-                {expanded && <p>Booking</p>}{" "}
+                {expanded && <p>Bookings</p>}{" "}
                 {/* Show text only when expanded */}
               </div>
 
-              <div className="flex items-center gap-6 text-white">
+              <div className="flex items-center gap-6 text-white cursor-pointer">
                 <span className="material-symbols-outlined">payments</span>
                 {expanded && <p>Payment</p>}{" "}
                 {/* Show text only when expanded */}
@@ -148,7 +144,7 @@ const AdminSidebar = () => {
 
             {/* Admin section */}
             <div
-              className={`flex items-center gap-6 mt-auto text-white ${
+              className={`flex items-center gap-6 mt-auto text-white cursor-pointer ${
                 expanded ? "border-t border-white" : ""
               }  w-[14vw] p-3`}
               onClick={logOut}

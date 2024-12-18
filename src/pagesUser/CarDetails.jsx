@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const CarDetails = () => {
@@ -11,6 +11,7 @@ const CarDetails = () => {
   const [amount, setAmount] = useState(null);
   const [bookedDriverIds, setBookedDriverIds] = useState(null);
   const [availableDriver, setAvailableDriver] = useState(null);
+  const navigate=useNavigate();
 
   // Fetch car details
   useEffect(() => {
@@ -137,6 +138,7 @@ const CarDetails = () => {
           bookedAmount: amount,
           bookingStatus: "booked",
         });
+        navigate("/user/selfDriveBookings");
       } else {
         const randomIndex = Math.floor(Math.random() * availableDriver.length);
         const selectedDriverId = availableDriver[randomIndex]._id;
