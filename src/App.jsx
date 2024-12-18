@@ -20,8 +20,9 @@ import UserHome from "./pagesUser/UserHome";
 import SelfDrivePage from "./pagesUser/SelfDrivePage";
 import GetCars from "./pagesUser/GetCars";
 import CarDetails from "./pagesUser/CarDetails";
-import DocumentPage from "./pagesUser/DocumentPage";
 import RentWithDriver from "./pagesUser/RentWithDriver";
+import UserBookings from "./pagesUser/UserBookings";
+import GetUsers from "./pagesAdmin/GetUsers";
 
 function App() {
   return (
@@ -51,6 +52,7 @@ function App() {
             <Route path="carmgmt/update/:id" element={<UpdateCars />} />
 
             <Route path="package" element={<Package />} />
+            <Route path="user" element={<GetUsers />} />
           </Route>
 
           {/* user routes */}
@@ -66,7 +68,7 @@ function App() {
               path="carDetails/:bookingId/:carId"
               element={<CarDetails />}
             />
-            <Route path="document" element={<DocumentPage />} />
+            <Route path="userBookings" element={<UserBookings/>}/>
           </Route>
         </Routes>
       </BrowserRouter>

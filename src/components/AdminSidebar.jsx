@@ -1,17 +1,16 @@
 import React, { useState } from "react";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet, useNavigate, Link } from "react-router-dom";
 
 const AdminSidebar = () => {
   const navigate = useNavigate();
   const [expanded, setExpanded] = useState(true);
 
-  const logOut=()=>{
+  const logOut = () => {
     localStorage.removeItem("id");
     localStorage.removeItem("role");
     localStorage.removeItem("token");
-    navigate("/login")
-
-  }
+    navigate("/login");
+  };
   return (
     <>
       <div className="flex h-[100vh]">
@@ -75,7 +74,12 @@ const AdminSidebar = () => {
                 </div>
               )}
 
-              <div className="flex items-center gap-6 text-white " onClick={()=>{navigate("/admin/package")}}>
+              <div
+                className="flex items-center gap-6 text-white "
+                onClick={() => {
+                  navigate("/admin/package");
+                }}
+              >
                 <span className="material-symbols-outlined">
                   swap_driving_apps_wheel
                 </span>
@@ -83,7 +87,12 @@ const AdminSidebar = () => {
                 {/* Show text only when expanded */}
               </div>
 
-              <div className="flex items-center gap-6 text-white " onClick={()=>{navigate("/admin/carmgmt")}}>
+              <div
+                className="flex items-center gap-6 text-white "
+                onClick={() => {
+                  navigate("/admin/carmgmt");
+                }}
+              >
                 <span className="material-symbols-outlined">
                   directions_car
                 </span>
@@ -102,7 +111,9 @@ const AdminSidebar = () => {
                 {expanded && <p>Driver</p>} {/* Show text only when expanded */}
               </div>
 
-              <div className="flex items-center gap-6 text-white">
+              <div className="flex items-center gap-6 text-white" onClick={()=>{
+                navigate("/admin/user")
+              }}>
                 <span className="material-symbols-outlined">group</span>
                 {expanded && <p>Users</p>} {/* Show text only when expanded */}
               </div>
