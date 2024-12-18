@@ -33,6 +33,7 @@ const Login = () => {
       localStorage.setItem("token", res.token);
       localStorage.setItem("role", res.role);
       localStorage.setItem("id", res.userId);
+      localStorage.setItem("email", res.email);
   
       if (res.role === "user") {
         navigate("/user/home");
