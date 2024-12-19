@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const UpdateDriver = () => {
 
@@ -63,6 +64,8 @@ const handleUpdate=async(e)=>{
     const url=`http://localhost:4000/driver/update/${id}`;
     const {data:res}=await axios.put(url,data);
     console.log(res);
+    toast.success("Driver Update Successfull!")
+    navigate("/admin/drivermgmt")
 
 }
   return (

@@ -129,13 +129,15 @@ const AdminSidebar = () => {
 
               
 
-              <div className="flex items-center gap-6 text-white cursor-pointer">
+              <div className="flex items-center gap-6 text-white cursor-pointer" onClick={()=>{navigate("/admin/viewBookings")}}>
                 <span className="material-symbols-outlined">laptop_car</span>
                 {expanded && <p>Bookings</p>}{" "}
                 {/* Show text only when expanded */}
               </div>
 
-              <div className="flex items-center gap-6 text-white cursor-pointer">
+              <div className="flex items-center gap-6 text-white cursor-pointer" onClick={()=>{
+                navigate("/admin/paidBookings")
+              }}>
                 <span className="material-symbols-outlined">payments</span>
                 {expanded && <p>Payment</p>}{" "}
                 {/* Show text only when expanded */}

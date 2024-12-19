@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const AdminViewBookings = () => {
   const [bookings, setBookings] = useState([]);
@@ -10,48 +11,64 @@ const AdminViewBookings = () => {
   useEffect(() => {
     const fetchAllBookings = async () => {
       try {
-        const bookingUrl = 'http://localhost:4000/booking/allBookings';
+        const bookingUrl = "http://localhost:4000/booking/allBookings";
         const bookingResponse = await axios.get(bookingUrl);
         const allBookings = bookingResponse.data;
         setBookings(allBookings);
 
-        // Fetch user, car, and driver details for each booking
-        const fetchAdditionalDetails = async () => {
-          for (let booking of allBookings) {
-            // Fetch user details using userId from booking
-            const userUrl = `http://localhost:4000/user/getIndividual/${booking.userId}`;
-            const userResponse = await axios.get(userUrl);
-            setUserData((prevState) => [...prevState, userResponse.data]);
+        const users = [];
+        const cars = [];
+        const drivers = [];
 
-            // Fetch car details using carId from booking
-            const carUrl = `http://localhost:4000/car/individualCar/${booking.carId}`;
-            const carResponse = await axios.get(carUrl);
-            setCarData((prevState) => [...prevState, carResponse.data]);
+        for (const booking of allBookings) {
+          // Fetch user data
+          const userResponse = await axios.get(
+            `http://localhost:4000/user/getIndividual/${booking.userId}`
+          );
+          users.push(userResponse.data);
 
-            // Fetch driver details if driverId exists
-            if (booking.rentalType !== 'selfDrive' && booking.driverId) {
-              const driverUrl = `http://localhost:4000/driver/getIndividual/${booking.driverId}`;
-              const driverResponse = await axios.get(driverUrl);
-              setDriverData((prevState) => [...prevState, driverResponse.data]);
-            } else {
-              // In case of selfDrive, push null for driverData
-              setDriverData((prevState) => [...prevState, null]);
-            }
+          // Fetch car data
+          const carResponse = await axios.get(
+            `http://localhost:4000/car/individualCar/${booking.carId}`
+          );
+          cars.push(carResponse.data);
+
+          // Fetch driver data (if applicable)
+          if (booking.rentalType !== "selfDrive" && booking.driverId) {
+            const driverResponse = await axios.get(
+              `http://localhost:4000/driver/getIndividual/${booking.driverId}`
+            );
+            drivers.push(driverResponse.data);
+          } else {
+            drivers.push(null); // Handle selfDrive rentals
           }
-        };
+        }
 
-        fetchAdditionalDetails();
+        setUserData(users);
+        setCarData(cars);
+        setDriverData(drivers);
       } catch (error) {
-        console.error('Error fetching bookings or related details:', error);
+        console.error("Error fetching bookings or related details:", error);
       }
     };
 
     fetchAllBookings();
   }, []);
 
+  const handleDelete = async (bookingId) => {
+    try {
+      const url = `http://localhost:4000/booking/delete/${bookingId}`;
+      const { data: res } = await axios.delete(url);
+      setBookings(bookings.filter((booking) => booking._id !== bookingId));
+      toast.success(res.message);
+    } catch (error) {
+      toast.error("Error deleting booking");
+    }
+  };
+
   return (
-    <div className="p-8 bg-gray-50 min-h-screen">
-      <h1 className="text-4xl font-extrabold text-center text-gray-800 mb-10 ">
+    <div className="p-8 min-h-screen">
+      <h1 className="text-4xl font-extrabold text-center text-gray-800 mb-10">
         All Bookings
       </h1>
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -61,22 +78,33 @@ const AdminViewBookings = () => {
               key={booking._id}
               className="bg-white border border-gray-200 rounded-2xl shadow-lg overflow-hidden"
             >
+              <span
+                class="material-symbols-outlined pt-4 pr-4 text-red-500 ml-[550px] h-fit w-fit cursor-pointer"
+                onClick={() => {
+                  handleDelete(booking._id);
+                }}
+              >
+                delete
+              </span>
               {/* Booking Info */}
-              <div className="p-6">
+              <div className="p-6 h-[31vh]">
                 <h2 className="text-2xl font-bold text-gray-700 mb-4 text-center">
                   Booking Information
                 </h2>
                 <div className="grid grid-cols-2 gap-4">
+                  {/* Booking Details */}
                   <div>
                     {booking.bookingStartDate && (
                       <p>
-                        <strong>Start Date:</strong>{' '}
-                        {new Date(booking.bookingStartDate).toLocaleDateString()}
+                        <strong>Start Date:</strong>{" "}
+                        {new Date(
+                          booking.bookingStartDate
+                        ).toLocaleDateString()}
                       </p>
                     )}
                     {booking.bookingEndDate && (
                       <p>
-                        <strong>End Date:</strong>{' '}
+                        <strong>End Date:</strong>{" "}
                         {new Date(booking.bookingEndDate).toLocaleDateString()}
                       </p>
                     )}
@@ -87,7 +115,7 @@ const AdminViewBookings = () => {
                     )}
                     {booking.pickUpTime && (
                       <p>
-                        <strong>Pick-up Time:</strong>{' '}
+                        <strong>Pick-up Time:</strong>{" "}
                         {new Date(booking.pickUpTime).toLocaleTimeString()}
                       </p>
                     )}
@@ -98,7 +126,7 @@ const AdminViewBookings = () => {
                     )}
                     {booking.dropOffTime && (
                       <p>
-                        <strong>Drop-off Time:</strong>{' '}
+                        <strong>Drop-off Time:</strong>{" "}
                         {new Date(booking.dropOffTime).toLocaleTimeString()}
                       </p>
                     )}
@@ -116,7 +144,8 @@ const AdminViewBookings = () => {
                     )}
                     {booking.bookedAmount && (
                       <p>
-                        <strong>Booking Amount:</strong> {booking.bookedAmount} NPR
+                        <strong>Booking Amount:</strong> {booking.bookedAmount}{" "}
+                        NPR
                       </p>
                     )}
                     {booking.rentalType && (
@@ -134,7 +163,7 @@ const AdminViewBookings = () => {
               </div>
 
               {/* User Info */}
-              <div className="p-6 bg-gray-100">
+              <div className="p-6 bg-gray-100 mt-2">
                 <h3 className="font-bold text-gray-700 mb-2">User Details</h3>
                 {userData[index] && (
                   <div>
@@ -160,11 +189,13 @@ const AdminViewBookings = () => {
                     <img
                       src={carData[index].image.url}
                       alt="Car"
-                      className="w-20 h-20 rounded-full "
+                      className="w-20 h-20 rounded-full"
                     />
                   )}
                   <div>
-                    <h3 className="text-gray-700 mb-2 font-bold">Car Details</h3>
+                    <h3 className="text-gray-700 mb-2 font-bold">
+                      Car Details
+                    </h3>
                     {carData[index]?.brand && (
                       <p>
                         <strong>Brand:</strong> {carData[index].brand}
@@ -177,7 +208,7 @@ const AdminViewBookings = () => {
                     )}
                     {carData[index]?.numberPlate && (
                       <p>
-                        <strong>Number Plate:</strong>{' '}
+                        <strong>Number Plate:</strong>{" "}
                         {carData[index]?.numberPlate}
                       </p>
                     )}
@@ -185,17 +216,19 @@ const AdminViewBookings = () => {
                 </div>
 
                 {/* Driver Details */}
-                {booking.rentalType !== 'selfDrive' && driverData[index] && (
+                {booking.rentalType !== "selfDrive" && driverData[index] && (
                   <div className="flex items-center gap-4">
                     {driverData[index]?.image?.url && (
                       <img
                         src={driverData[index].image.url}
                         alt="Driver"
-                        className="w-20 h-20 rounded-full "
+                        className="w-20 h-20 rounded-full"
                       />
                     )}
                     <div>
-                      <h3 className="font-bold text-gray-700 mb-2">Driver Details</h3>
+                      <h3 className="font-bold text-gray-700 mb-2">
+                        Driver Details
+                      </h3>
                       {driverData[index]?.name && (
                         <p>
                           <strong>Name:</strong> {driverData[index].name}

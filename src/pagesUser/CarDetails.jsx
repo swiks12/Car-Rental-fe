@@ -137,7 +137,8 @@ const CarDetails = () => {
           carId: carId,
           bookedAmount: amount,
           bookingStatus: "booked",
-          userEmail:localStorage.getItem("email")
+          userEmail:localStorage.getItem("email"),
+          bookingStartDate:new Date(bookingData.bookingStartDate).toLocaleDateString()
         });
         navigate("/user/selfDriveBookings");
       } else {

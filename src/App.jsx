@@ -28,6 +28,7 @@ import SelfDriveBookings from "./pagesUser/SelfDriveBookings";
 import About from "./pagesUser/About";
 import Bookings from "./pagesUser/Bookings";
 import AdminViewBookings from "./pagesAdmin/AdminViewBookings";
+import PaidBookings from "./pagesAdmin/PaidBookings";
 
 function App() {
   return (
@@ -59,6 +60,7 @@ function App() {
             <Route path="package" element={<Package />} />
             <Route path="user" element={<GetUsers />} />
             <Route path="viewBookings" element={<AdminViewBookings />} />
+            <Route path="paidBookings" element={<PaidBookings />} />
           </Route>
 
           {/* user routes */}
