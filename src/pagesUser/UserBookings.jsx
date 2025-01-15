@@ -16,20 +16,20 @@ const UserBookings = () => {
 
         setData(bookings);
 
-        const fetchCarAndDriverDetails = async () => {
-          for (let booking of bookings) {
-            const carUrl = `http://localhost:4000/car/individualCar/${booking.carId}`;
-            const driverUrl = `http://localhost:4000/driver/getIndividual/${booking.driverId}`;
+        // Fetch car and driver details in parallel
+        const carPromises = bookings.map((booking) =>
+          axios.get(`http://localhost:4000/car/individualCar/${booking.carId}`)
+        );
+        const driverPromises = bookings.map((booking) =>
+          axios.get(`http://localhost:4000/driver/getIndividual/${booking.driverId}`)
+        );
 
-            const carResponse = await axios.get(carUrl);
-            const driverResponse = await axios.get(driverUrl);
+        // Resolve all promises and extract data
+        const carResults = await Promise.all(carPromises);
+        const driverResults = await Promise.all(driverPromises);
 
-            setCarData((prevState) => [...prevState, carResponse.data]);
-            setDriverData((prevState) => [...prevState, driverResponse.data]);
-          }
-        };
-
-        fetchCarAndDriverDetails();
+        setCarData(carResults.map((res) => res.data));
+        setDriverData(driverResults.map((res) => res.data));
       } catch (error) {
         console.error("Error fetching bookings, car or driver details", error);
       }
@@ -93,20 +93,18 @@ const UserBookings = () => {
               </div>
 
               {/* Car and Driver Info */}
-              <div className="grid grid-cols-2 gap-4 bg-gray-100 p-6">
+              <div className="grid grid-cols-2 gap-4 bg-gray-100 p-6 h-[30vh]">
                 {/* Car Details */}
                 <div className="flex items-center gap-4">
                   {carData[index]?.image?.url && (
                     <img
                       src={carData[index].image.url}
                       alt="Car"
-                      className="w-20 h-20 rounded-full "
+                      className="w-20 h-20 rounded-full"
                     />
                   )}
                   <div>
-                    <h3 className=" text-gray-700 mb-2 font-bold">
-                      Car Details
-                    </h3>
+                    <h3 className="text-gray-700 mb-2 font-bold">Car Details</h3>
                     <p>
                       <strong>Brand:</strong> {carData[index]?.brand}
                     </p>
@@ -114,8 +112,7 @@ const UserBookings = () => {
                       <strong>Model:</strong> {carData[index]?.model}
                     </p>
                     <p>
-                      <strong>Number Plate:</strong>{" "}
-                      {carData[index]?.numberPlate}
+                      <strong>Number Plate:</strong> {carData[index]?.numberPlate}
                     </p>
                   </div>
                 </div>
@@ -126,13 +123,11 @@ const UserBookings = () => {
                     <img
                       src={driverData[index].image.url}
                       alt="Driver"
-                      className="w-20 h-20 rounded-full  "
+                      className="w-20 h-20 rounded-full"
                     />
                   )}
                   <div>
-                    <h3 className="font-bold text-gray-700 mb-2">
-                      Driver Details
-                    </h3>
+                    <h3 className="font-bold text-gray-700 mb-2">Driver Details</h3>
                     <p>
                       <strong>Name:</strong> {driverData[index]?.name}
                     </p>

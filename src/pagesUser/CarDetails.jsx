@@ -142,9 +142,17 @@ const CarDetails = () => {
         });
         navigate("/user/selfDriveBookings");
       } else {
+        if (!availableDriver || availableDriver.length === 0) {
+          toast.error("Sorry! No driver available!");
+          return;
+        }
         const randomIndex = Math.floor(Math.random() * availableDriver.length);
+        console.log(randomIndex);
         const selectedDriverId = availableDriver[randomIndex]._id;
-        console.log(selectedDriverId)
+        console.log(selectedDriverId,"here")
+        // if(selectedDriverId===null){
+        //   toast.error("Sorry! no driver available!")
+        // }
         const url = `http://localhost:4000/booking/updateBookingInfo/${bookingId}`;
         const { data: res } = await axios.patch(url, {
           carId: carId,
@@ -167,7 +175,6 @@ const CarDetails = () => {
 
       toast.success("Booking Successfull!");
     } catch (error) {
-      console.log(e);
       toast.error(error);
     }
   };

@@ -83,7 +83,7 @@ const AdminSidebar = () => {
                 <span className="material-symbols-outlined">
                   swap_driving_apps_wheel
                 </span>
-                {expanded && <p >Package</p>}{" "}
+                {expanded && <p>Package</p>}{" "}
                 {/* Show text only when expanded */}
               </div>
 
@@ -111,9 +111,12 @@ const AdminSidebar = () => {
                 {expanded && <p>Driver</p>} {/* Show text only when expanded */}
               </div>
 
-              <div className="flex items-center gap-6 text-white cursor-pointer" onClick={()=>{
-                navigate("/admin/user")
-              }}>
+              <div
+                className="flex items-center gap-6 text-white cursor-pointer"
+                onClick={() => {
+                  navigate("/admin/user");
+                }}
+              >
                 <span className="material-symbols-outlined">group</span>
                 {expanded && <p>Users</p>} {/* Show text only when expanded */}
               </div>
@@ -127,17 +130,23 @@ const AdminSidebar = () => {
                 </div>
               )}
 
-              
-
-              <div className="flex items-center gap-6 text-white cursor-pointer" onClick={()=>{navigate("/admin/viewBookings")}}>
+              <div
+                className="flex items-center gap-6 text-white cursor-pointer"
+                onClick={() => {
+                  navigate("/admin/viewBookings");
+                }}
+              >
                 <span className="material-symbols-outlined">laptop_car</span>
                 {expanded && <p>Bookings</p>}{" "}
                 {/* Show text only when expanded */}
               </div>
 
-              <div className="flex items-center gap-6 text-white cursor-pointer" onClick={()=>{
-                navigate("/admin/paidBookings")
-              }}>
+              <div
+                className="flex items-center gap-6 text-white cursor-pointer"
+                onClick={() => {
+                  navigate("/admin/paidBookings");
+                }}
+              >
                 <span className="material-symbols-outlined">payments</span>
                 {expanded && <p>Payment</p>}{" "}
                 {/* Show text only when expanded */}
